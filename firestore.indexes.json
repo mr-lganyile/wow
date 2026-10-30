@@ -1,0 +1,33 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "groups",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "groupArea",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "groupName",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Groups",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "groupArea",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "groupName",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

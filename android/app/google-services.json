@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "838473383407",
+    "project_id": "wow-we-won",
+    "storage_bucket": "wow-we-won.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:838473383407:android:838ceef3d647b6bab38a1a",
+        "android_client_info": {
+          "package_name": "com.skyandstars4all.wow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBm2sSKw8XtGMc10_F6huRkMsxTS7YxPSY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

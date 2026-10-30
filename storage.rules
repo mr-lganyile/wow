@@ -1,0 +1,134 @@
+rules_version = '2';
+
+// Craft rules based on data in your Firestore database
+// allow write: if firestore.get(
+//    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+
+    // Branch : group_resources_crud ->  group_resources_crud_storage_security
+    // Images can either be .png or .jpg in order for them to be acceptable.
+    function isValidContentType(data) {
+      return data.contentType in ['image/png', 'image/jpeg', 'image/jpg', 'video/mp4'];
+    }
+
+    // Branch : group_resources_crud ->  group_resources_crud_storage_security
+    function isValidFileExtension(fileName) {
+      return fileName.matches('(?i:.*[.]png)');
+    }
+
+    // Branch : store_resources_crud ->  store_resources_crud_storage_security
+    // Videos/Images must be less than 100MB
+    function isValidFileSize(data) {
+      return data.size <= 100 * 1024 * 1024;
+    }
+
+    match /admins/profile_images/{adminImage}{
+      allow write, read;
+    }
+
+    // Branch : store_resources_crud ->  store_resources_crud_storage_security
+    // Done Unit Testing, Except For The Update Operation.
+    match /hosting_areas/{locationImage} {
+
+      allow create; //: if request.auth != null && 
+
+      // Make sure authenticated user's uid is the same as the document id of this image.
+      // request.auth.uid == storeOwnerIdentityDocument &&
+
+      // Make sure the store already exist whereas the store owner with the same phone number isn't.
+      // firestore.exists(/databases/(default)/documents/stores/
+      // $(request.auth.uid)) &&
+      // firestore.exists(/databases/(default)/documents/store_owners/
+      // $(request.auth.uid))==false &&
+
+      // isValidFileSize(request.resource);// && 
+      //isValidContentType(request.resource);
+
+      allow read;//: if request.auth.uid != null &&
+      //(request.auth.uid==storeOwnerIdentityDocument ||
+      //firestore.get(/databases/(default)/documents/store_owners/
+      //$(request.auth.uid)).data.isAdmin
+      //);
+
+      // No one can delete any saved identity documents.
+      allow update, delete: if false;
+    }
+
+    // Branch : group_resources_crud ->  group_resources_crud_storage_security
+    // Done Unit Testing, Except For The Update Operation.
+    match /{host}/users/profile_images/{profileImage} {
+
+      allow create;//: if request.auth != null;// && 
+
+      // Make sure authenticated user's uid is the same as the document id of this image.
+      //request.auth.uid == profileImage &&
+
+      // Make sure there is no user already using the new user's phone number.
+      //firestore.exists(/databases/(default)/documents/users/
+      //$(request.auth.uid))==false &&
+      //firestore.exists(/databases/(default)/documents/store_owners/
+      //$(request.auth.uid))==false &&
+      
+      //isValidFileSize(request.resource) && 
+      //isValidContentType(request.resource); */
+
+      allow read; // Anybody can view  store owners images.
+
+      // No one can delete a store owner image.
+      allow update, delete: if false;
+      
+    }
+
+    // Branch : group_resources_crud ->  group_resources_crud_storage_security
+    match /{host}/groups_specific_locations/{locationImage} {
+
+      // Make sure the user is authenticated.
+      allow create: if true; //request.auth != null && 
+
+      // Make sure authenticated user's uid is the same as the document id of this image.
+      //request.auth.uid == locationImage &&
+
+      // Make sure the current user does not have an existing group.
+      //firestore.exists(/databases/(default)/documents/groups/
+      //$(request.auth.uid))==false &&
+      
+      //isValidFileSize(request.resource) && 
+      //isValidContentType(request.resource);
+
+      allow read; // Anybody can view  store owners images.
+
+      // No one can delete a store owner image.
+      allow update, delete: if false;
+      
+    }
+
+    // Branch : store_resources_crud ->  store_resources_crud_storage_security
+    match /{host}/grand_prices_images/{storeDrawPricesId} {
+      // Store owners can only create their store image
+      // which also have acceptable size and format.
+      allow create: if true; //request.auth != null && 
+
+      //firestore.exists(/databases/(default)/documents/store_owners/
+      //$(request.auth.uid)) &&
+      
+      //isValidFileSize(request.resource) && 
+      //isValidContentType(request.resource);
+       
+      allow read; // Anybody can view  stores images.
+
+      // No one can delete a store image.
+      allow update, delete: if false;
+    }
+
+    // Branch : group_resources_crud ->  group_resources_crud_storage_security
+    match /{host}/group_members/{groupId}/profile_images/{memberPhoneNumber} {
+      allow read;
+      allow write;
+    }
+
+  }
+}

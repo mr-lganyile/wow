@@ -1,0 +1,535 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      // get - used if a client with want to read this document.
+      // list - used if there is going to be a query returning this document.
+      // To make this rule cascade I'll have to use restOfPath=** wildcard otherwise it won't.
+      allow read, write: if false;
+    }
+
+    function isSuperiorAdmin(){
+      return isAdmin() && get(/databases/$(database)/documents/admins/
+      $(request.auth.uid)).data.isSuperior;
+    }
+
+    function isAdmin(){
+      return request.auth != null &&
+      
+      exists(/databases/$(database)/documents/admins/
+      $(request.auth.uid));
+    }
+
+    function isAreaContainedWithin(){
+      return request.resource.data.groupArea.areaName in [
+        // 1. Umlazi
+        'A Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'AA Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'B Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'BB Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'C Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'CC Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'D Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'E Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'F Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'G Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'H Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'J Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'K Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'J Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'L Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'M Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'N Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'P Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'Q Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'R Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'S Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'U Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'V Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'W Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'Y Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'Z Section-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'Malukazi-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+        'Philani-Umlazi-Durban-Kwa Zulu Natal-South Africa',
+
+        // 2. Mangosuthu
+        'Mangosuthu (MUT)-Durban-Kwa Zulu Natal-South Africa',
+
+        // 3. DUT
+        'DUT-Durban-Kwa Zulu Natal-South Africa',
+
+        // 4. UKZN Howard
+        'Howard College (UKZN)-Durban-Kwa Zulu Natal-South Africa',
+
+        // 5. Mayville
+        'Cato Crest-Mayville-Durban-Kwa Zulu Natal-South Africa',
+        'Cato Manor-Mayville-Durban-Kwa Zulu Natal-South Africa',
+        'Richview-Mayville-Durban-Kwa Zulu Natal-South Africa',
+        'Masxha-Mayville-Durban-Kwa Zulu Natal-South Africa',
+        'Bonela-Mayville-Durban-Kwa Zulu Natal-South Africa',
+        'Nsimbini-Mayville-Durban-Kwa Zulu Natal-South Africa',
+        'Galway-Mayville-Durban-Kwa Zulu Natal-South Africa',
+
+        // 6. Sydenham
+        'Foreman-Sydenham-Durban-Kwa Zulu Natal-South Africa',
+        'Burnwood-Sydenham-Durban-Kwa Zulu Natal-South Africa',
+        'Kennedy-Sydenham-Durban-Kwa Zulu Natal-South Africa',
+        'Palmet-Sydenham-Durban-Kwa Zulu Natal-South Africa',
+        'Sydenham Height-Sydenham-Durban-Kwa Zulu Natal-South Africa',
+        '3 Rand-Sydenham-Durban-Kwa Zulu Natal-South Africa',
+
+        // 7. Durban Central
+        'Glenwood-Durban Central-Durban-Kwa Zulu Natal-South Africa',
+        'Berea-Durban Central-Durban-Kwa Zulu Natal-South Africa',
+        'South Beach-Durban Central-Durban-Kwa Zulu Natal-South Africa',
+        'Masgrave-Durban Central-Durban-Kwa Zulu Natal-South Africa',
+
+        // 8. Nanda
+        'Bhambayi-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Ezimangweni-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Dikwe-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Mshayazafe-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Jackport-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Ohlange-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Africa-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Congo-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Maoti-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Newtown A-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Newtown B-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Ka G-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Matendeni-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Mtshebheni-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Zinkawini-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Tafuleni-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Ngoqokazi-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Matikwe-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Stop 8-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Mafuya-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Nhlungwane-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Newtown C-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Machobeni-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'Mzomusha-Nanda-Durban-Kwa Zulu Natal-South Africa',
+        'White City-Nanda-Durban-Kwa Zulu Natal-South Africa',
+
+        // 9. Hammarsdale
+        'Unit 1 North-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Unit 1 South-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Unit 2 North-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Unit 2 South-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Unit 3-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Unit 4-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Unit 5-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Unit 6-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Unit 7-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Mlaba Village-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Georgedale-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Amalanga-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Woodglen-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Sankontshe-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Mophela-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Station-Hammarsdale-Durban-Kwa Zulu Natal-South Africa',
+        'Webber-Hammarsdale-Durban-Kwa Zulu Natal-South Africa'
+
+      ];
+    }
+
+    function crucialGroupPropertiesNotChanged(){
+      return  request.resource.data.groupName == 
+      resource.data.groupName &&
+
+      request.resource.data.groupImageURL == 
+      resource.data.groupImageURL &&
+
+      request.resource.data.groupArea.areaName == 
+      resource.data.groupArea.areaName &&
+
+      request.resource.data.groupArea.areaNo == 
+      resource.data.groupArea.areaNo &&
+
+      request.resource.data.groupArea.townOrInstitutionFK == 
+      resource.data.groupArea.townOrInstitutionFK &&
+
+      request.resource.data.groupTownOrInstitution ==
+      resource.data.groupTownOrInstitution &&
+
+      request.resource.data.groupSpecificArea == 
+      resource.data.groupSpecificArea &&
+      
+      request.resource.data.groupCreatorPhoneNumber ==
+      resource.data.groupCreatorPhoneNumber &&
+
+      request.resource.data.groupCreatorUsername ==
+      resource.data.groupCreatorUsername &&
+
+      request.resource.data.groupCreatorImageURL ==
+      resource.data.groupCreatorImageURL &&
+
+      request.resource.data.groupMembers.size() ==
+      resource.data.groupMembers.size() &&
+
+      request.resource.data.maxNoOfMembers ==
+      resource.data.maxNoOfMembers;
+    }
+
+    // Branch : supported_locations_resources_crud -> supported_locaitons_resources_crud_firestore_security_rules
+    match /supported_countries/{countryId}{
+      allow write: if isSuperiorAdmin();
+      allow read;
+    }
+
+    // Branch : supported_locations_resources_crud -> supported_locaitons_resources_crud_firestore_security_rules
+    match /supported_provinces_or_states/{provinceOrStateId}{
+      allow write: if isSuperiorAdmin();
+      allow read;
+    }
+
+    // Branch : supported_locations_resources_crud -> supported_locaitons_resources_crud_firestore_security_rules
+    match /supported_cities/{cityId}{
+      allow write: if isSuperiorAdmin();
+      allow read;
+    }
+
+    // Branch : supported_locations_resources_crud -> supported_locaitons_resources_crud_firestore_security_rules
+    match /supported_towns_or_institutions/{townsOrInstitutionsId}{
+      allow write: if isSuperiorAdmin();
+      allow read;
+    }
+
+    // Branch : supported_locations_resources_crud -> supported_locaitons_resources_crud_firestore_security_rules
+    match /supported_areas/{areaId}{
+      allow write: if isSuperiorAdmin();
+      allow read;
+    }
+
+    // Note: Has Model Named {Admin}
+    // Unit Testing Applied
+    match /admins/{adminUserId}{
+      
+      // allow create: if isSuperiorAdmin() && 
+      // request.resource.data.isSuperior == false; 
+      allow create;
+
+      // allow list: if isAdmin();
+      // allow get;
+      allow read;
+
+      allow delete: if isSuperiorAdmin() && 
+      resource.data.isSuperior == false;
+
+      // Users may edit other user's profile image urls which is wrong.
+      allow update: if isSuperiorAdmin() &&
+      request.resource.data.isSuperior == resource.data.isSuperior &&
+      request.resource.data.key == resource.data.key &&
+      request.resource.data.isFemale == resource.data.isFemale &&
+      request.resource.data.profileImageURL == resource.data.profileImageURL &&
+      request.resource.data.townOrInstitution == resource.data.townOrInstitution &&
+      request.resource.data.joinedOn['year'] == resource.data.joinedOn['year'] &&
+      request.resource.data.joinedOn['month'] == resource.data.joinedOn['month'] &&
+      request.resource.data.joinedOn['day'] == resource.data.joinedOn['day'];
+      
+    }
+
+    // Note: Has Model Named {Alcoholic}
+    // Unit Testing Applied 
+    match /users/{userId}{
+      allow create: if request.auth != null &&
+
+      // Phone number is provided.
+      request.resource.data.phoneNumber != null &&
+      request.resource.data.phoneNumber != '' &&
+
+      request.resource.data.profileImageURL != null &&
+      request.resource.data.profileImageURL != '' &&
+
+      // We need to compare a property(phoneNumber) of user docs instead of a uid.
+      exists(/databases/$(database)/documents/users/
+      $(userId))==false &&
+
+      // We need to compare a property(phoneNumber) of admin docs instead of a uid.
+      exists(/databases/$(database)/documents/admins/
+      $(userId))==false;
+
+      allow read;
+
+      // "update" is made this way because it conflicts with "create".
+      allow update, delete: if false;
+    }
+
+    // Note: Has Model Named {Group}
+    // Unit Testing Applied 
+    match /groups/{groupId}{
+
+      allow create; // : if  
+
+      // request.resource.data.groupName != null &&
+      // request.resource.data.groupName.size() >= 3 &&
+
+      // request.resource.data.groupImageURL!= null &&
+      // request.resource.data.groupImageURL != ''; // &&
+
+      // isAreaContainedWithin() &&
+
+      // request.resource.data.groupSpecificArea != '' &&
+      // request.resource.data.groupSpecificArea != null &&
+      // request.resource.data.groupTownOrInstitution != null &&
+      
+      // request.resource.data.groupCreatorPhoneNumber != null &&
+      // request.resource.data.groupCreatorPhoneNumber == groupId &&
+
+      // request.resource.data.groupCreatorUsername != null &&
+      // request.resource.data.groupCreatorUsername != '' &&
+
+      // request.resource.data.groupCreatorImageURL != null &&
+      // request.resource.data.groupCreatorImageURL != '' &&
+      
+      // request.resource.data.groupMembers != null &&
+      // request.resource.data.groupMembers.size() >= 3 &&
+
+      // request.resource.data.isActive==false &&
+
+      //request.resource.data.maxNoOfMembers == 5; 
+
+      // Anybody can view groups.
+      allow read;
+
+      
+      allow update:if 
+
+      // Let admins add or remove groups from competitions.
+      (isAdmin() && crucialGroupPropertiesNotChanged()) 
+      
+      ||
+      // Let any user send an activation request for a given group.
+      (
+        crucialGroupPropertiesNotChanged() && 
+        request.resource.data.isActive == resource.data.isActive &&
+        exists(/databases/$(database)/documents/activation_requests/$(request.resource.data.activationRequest.activationRequestId))
+        
+      );
+
+      allow delete: if false;
+
+      
+    }
+
+    match /activation_requests/{requestId}{
+        allow create: if 
+        request.resource.data.activationRequestId == requestId &&
+        request.resource.data.isApproved == false &&
+        request.resource.data.voucherType in [
+          'Blue Voucher',
+          'Easy Load',
+          'Easy Pay',
+          '1Voucher',
+          'OTT'
+        ] &&
+        request.resource.data.requestDate == null &&
+        request.resource.data.voucher != '';
+        allow read, delete: if isSuperiorAdmin();
+
+        allow update: if isAdmin() &&
+        request.resource.data.activationRequestId == resource.data.activationRequestId &&
+        (
+          request.resource.data.isApproved != resource.data.isApproved ||
+          (
+            request.resource.data.moneyCollectorFK != null && 
+            resource.data.moneyCollectorFK==null
+          ) ||
+          request.resource.data.isChecked != resource.data.isChecked
+        ) &&
+        request.resource.data.voucherType == resource.data.voucherType &&
+        request.resource.data.requestDate == resource.data.requestDate &&
+        request.resource.data.groupFK == resource.data.groupFK &&
+        request.resource.data.voucher == resource.data.voucher;
+
+      }
+
+    match /money_bags/{moneyBagId}{
+      allow create: if isSuperiorAdmin();
+      allow update: if isSuperiorAdmin() || (isAdmin() && 
+      request.auth.uid == resource.data.moneyCollectorBagId);
+      allow read: if isSuperiorAdmin() || request.auth.uid == resource.data.moneyCollectorBagId;
+      allow delete: if isSuperiorAdmin();
+    }
+
+    match /stored_money_bags/{moneyBagId}{
+      allow create: if isAdmin();
+      allow update: if isSuperiorAdmin() || (isAdmin() && 
+      request.auth.uid == resource.data.moneyCollectorBagId);
+      allow read: if isSuperiorAdmin() || request.auth.uid == resource.data.moneyCollectorBagId;
+      allow delete: if isSuperiorAdmin();
+    }
+
+    // Note: Has Model Named {HostingArea}
+    // Unit Testing Applied 
+    match /hosting_areas/{hostingAreaId}{
+
+      allow write: if isSuperiorAdmin();
+
+      allow read: if true;
+
+      // Note: Has Model Named {StoreDraw}
+      // Unit Testing Applied
+      match /hosted_draws/{hostedDrawId}{
+
+        // Only a store owner can create a store draw.
+        allow create: if isSuperiorAdmin();// &&
+        
+        // Make Sure It Friday. 
+        // Make Sure There Is No Other Previous Unplayed Store Draw.
+        // [removed for front end testing purpose, backend unit tests already passed.] request.resource.data.drawDateAndTime.weekday==7 && 
+        
+        // [removed for front end testing purpose, backend unit tests already passed.] 
+        //request.resource.data.drawDateAndTime.hour==8 &&
+
+        // Make Sure It 8am, 9am or 10am.
+        //[removed for front end testing purpose, backend unit tests already passed.] 
+        //(request.resource.data.drawDateAndTime.minute==8 
+        //|| request.resource.data.drawDateAndTime.minute==9 || 
+        //request.resource.data.drawDateAndTime.minute==10)
+
+        // Anybody can view store draws.
+        allow read;
+
+        allow update, delete: if false;
+
+        // Branch : store_resources_crud ->  store_resources_crud_storage_security_rules
+        // Done With Unit Testing.
+        match /draw_grand_prices/{drawGrandPriceId}{
+          
+          // Only a store owner can create a store draw grand price.
+          allow create: if isSuperiorAdmin() &&
+
+          request.resource.data.hostedDrawFK != null &&
+          request.resource.data.hostedDrawFK == hostedDrawId &&
+
+          request.resource.data.imageURL != null &&
+          request.resource.data.imageURL != "" &&
+
+          request.resource.data.description != null &&
+          request.resource.data.description != "" &&
+
+          request.resource.data.grandPriceIndex != null &&
+          request.resource.data.grandPriceIndex>=0;
+
+          // Anybody can view store draws.
+          allow read;
+
+          allow update, delete: if false;
+        }
+          
+      }
+
+    }
+
+    // Note: Has Model Named {HostInfo}
+    // Unit Testing Applied
+    match /hosts_info/{hostInfoId}{
+      allow read;
+      // Documents of this collection are created by a cloud function.
+      allow update: if 
+      request.resource.data.hostInfoId == resource.data.hostInfoId &&
+      request.resource.data.hostingAreaName == resource.data.hostingAreaName &&
+      request.resource.data.sectionName == resource.data.sectionName &&
+      request.resource.data.pickUpArea == resource.data.pickUpArea &&
+      request.resource.data.hostingAreaImageURL == resource.data.hostingAreaImageURL;
+
+      allow create, delete: if false; 
+    
+    }
+
+    // Note: Has Model Named {WonPriceSummary}
+    // Unit Testing Applied
+    match /won_prices_summaries/{wonPriceSummaryId}{
+      
+      // create - Invoked Whenever Somebody Wins A Competition.
+      allow write: if false;
+
+      // Everybody can see a won price.
+      allow read;
+
+      // Note: Has Model Named {WonPriceComment}
+      // Unit Testing Applied
+      match /comments/{commentId}{
+        allow create: if request.auth != null &&
+        request.resource.data.wonPriceSummaryFK == wonPriceSummaryId &&
+        request.resource.data.wonPriceCommentId == commentId && 
+        exists(/databases/$(database)/documents/won_prices_summaries/
+        $(wonPriceSummaryId)) &&
+        request.resource.data.forTownOrInstitution == get(/databases/$(database)/documents/won_prices_summaries/
+        $(wonPriceSummaryId)).data.groupTownOrInstitution.townOrInstitutionName;
+
+        allow read;
+
+        allow update, delete: if request.auth != null &&
+        request.auth.uid == resource.data.creatorPhoneNumber;
+      }
+    }
+
+    // All competitions should take the same amount of time to finish.
+    // Note: Has Model Named {Competition}
+    match /competitions/{competitionId}{
+      
+      // get - Invoked whenever one needs to view the competition.
+      allow get: if true; 
+      allow list: if false;
+      allow update;
+      
+      // create - Automatically invoked when a competition is created(Screen 10.2.1).
+      allow create: if false;
+      
+      // Branch : competition_resources_crud ->  competition_resources_crud_firestore_security_rules
+      // Note: Has Model Named {GrandPricesGrid}
+      match /grand_prices_grids/{grandPriceGridId}{
+
+        allow write: if false;
+        allow get: if true; 
+        allow list: if false;
+
+        // Branch : competition_resources_crud ->  competition_resources_crud_firestore_security_rules
+        // Note: Has Model Named {GrandPriceToken}
+        match /grand_prices_tokens/{grandPriceTokenId}{
+          allow write: if false;
+          allow read: if true;
+        }
+      
+      }
+
+      // Branch : competition_resources_crud ->  competition_resources_crud_firestore_security_rules
+      // Note: Has Model Named {GroupCompetitorsGrid}
+      match /group_competitors_grids/{competitorGridId}{
+        
+        allow write: if false;
+        allow get: if true; 
+        allow list: if false;
+
+        // Branch : competition_resources_crud ->  competition_resources_crud_firestore_security_rules
+        // Note: Has Model Named {GroupCompetitorToken}
+        match /group_competitors_tokens/{competitorTokenId}{
+          allow write: if false;
+          allow get: if false;
+          allow list: if true;
+        }
+      }
+    }
+
+    // Note: Has Model Named {CountDownClock}
+    match /count_down_clocks/{competitionCountDownId}{
+      allow read;
+      allow write: if false;
+    }
+
+    // Ready For Publication
+    match /notifications/{notificationId}{
+      allow read;
+      allow write: if isSuperiorAdmin();
+    }
+
+    // Ready For Publication
+    match /recruitment_history/{recruitmentHistoryId}{
+      allow read;
+      allow write: if isAdmin();
+    }
+  }
+}  
