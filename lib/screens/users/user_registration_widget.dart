@@ -237,7 +237,6 @@ class UserRegistrationState extends State<UserRegistrationWidget> {
                       }
 
                       items = dbItems;
-                      debug.log('Areas List Size ${items.length}');
 
                       return GetBuilder<UserController>(
                         builder: (_) {

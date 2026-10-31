@@ -7,6 +7,8 @@ import '/models/locations/supported_area.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
+import 'dart:developer' as debug;
+
 // Branch : supported_locations_resources_crud ->  supported_locations_resources_data_access
 class LocationController extends GetxController {
   FirebaseFirestore firestore;
@@ -34,6 +36,7 @@ class LocationController extends GetxController {
         .map(
           (snapshot) => snapshot.docs.map((doc) {
             SupportedArea info = SupportedArea.fromJson(doc.data());
+            debug.log(info.toString());
             return info;
           }).toList(),
         );

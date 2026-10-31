@@ -1,3 +1,5 @@
+import 'package:wow/models/locations/durban_central_area.dart';
+
 import '/models/competitions/voucher_type.dart';
 
 import '/models/competitions/competition_state.dart';
@@ -129,32 +131,27 @@ class Converter {
 
   // Default durban central [berea]
   static SupportedArea toSupportedArea(SectionName sectionName) {
-    SupportedArea? supportedArea = HowardArea.toSupportedArea(sectionName);
-
-    supportedArea ??= SupportedArea(
-      townOrInstitutionFK: "7",
-      sectionName: sectionName,
-      areaNo: "44",
+    SupportedArea? supportedArea = DurbanCentralArea.toSupportedArea(
+      sectionName,
     );
+    supportedArea ??= HowardArea.toSupportedArea(sectionName);
 
-    return supportedArea;
+    return supportedArea!;
   }
 
   // Default to Berea
   static SectionName toSectionName(String section) {
-    SectionName? sectionName = HowardArea.toSectionName(section);
-
-    sectionName ??= SectionName.bereaDurbanCentralDurbanKwaZuluNatalSouthAfrica;
-    return sectionName;
+    SectionName? sectionName = DurbanCentralArea.toSectionName(section);
+    sectionName ??= HowardArea.toSectionName(section);
+    return sectionName!;
   }
 
   // Default to Berea
   static String asString(SectionName sectionName) {
-    String? section = HowardArea.asString(sectionName);
+    String? section = DurbanCentralArea.asString(sectionName);
+    section ??= HowardArea.asString(sectionName);
 
-    section ??= 'Berea-Durban Central-Durban-Kwa Zulu Natal-South Africa';
-
-    return section;
+    return section!;
   }
 
   static bool isInstitution(SectionName sectionName) {

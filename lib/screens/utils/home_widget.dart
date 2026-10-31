@@ -37,7 +37,7 @@ class _HomeWidgetState extends State<HomeWidget> {
 
     if (user == null) {
       wonPriceSummariesStream = competitionController.readAreaWonPriceSummaries(
-        "5",
+        "7",
       ); // Mayville
     } else if (user is my.User) {
       wonPriceSummariesStream = competitionController.readAreaWonPriceSummaries(

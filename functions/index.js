@@ -1051,10 +1051,9 @@ export const createWonPriceSummary =
                     const isLive = competitionSnapshot.data().isLive;
 
 
-                    // REMOVED && isLive
-                    if (isOver) {
-                        // log('Competition is isOver...');
-                        // reference.update({ isLive: false });
+                    if (isOver && isLive) {
+                        // log('Competition is isOver and isLive...');
+                        reference.update({ isLive: false });
                         // log('Competition Is No Longer Live');
                         const wonPriceSummaryId =
                             competitionSnapshot.data().competitionId;
@@ -1708,18 +1707,6 @@ export const createFakeDraws = onRequest(
         await hostInfoReference.update({ latestHostedDrawId: hostedDrawId });
         // Send back a message that we"ve successfully written to the db.
         res.json({ result: `Fake Draws Saved.` });
-    });
-
-// http://127.0.0.1:5001/wow-we-won/africa-south1/createFakeUsers
-export const createFakeUsers = onRequest(
-    {
-        region: "africa-south1"
-    }, async (req, res) => {
-
-        // True means use online auth users, otherwise use emulator's.
-        fakeUsers.createFakeUsers(false);
-        // Send back a message that we"ve successfully written to the db.
-        res.json({ result: `Fake Users Saved.` });
     });
 
 // http://127.0.0.1:5001/wow-we-won/africa-south1/updateFakeGroups

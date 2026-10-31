@@ -90,14 +90,15 @@ class _StartScreenState extends State<StartScreen>
             title: Text('Admin', style: TextStyle(fontSize: listTilesFontSize)),
             onTap: () => Get.to(() => AdminEntranceWidget()),
           ),
+
+          /*
           ListTile(
             leading: Icon(Icons.group, size: listTilesIconSize),
             iconColor: MyApplication.logoColor1,
             textColor: MyApplication.logoColor2,
             title: Text('Users', style: TextStyle(fontSize: listTilesFontSize)),
             onTap: () => Get.to(() => UsersWidget()),
-          ),
-
+          ), */
           getCurrentlyLoggenInUser() != null
               ? const SizedBox.shrink()
               : ListTile(
