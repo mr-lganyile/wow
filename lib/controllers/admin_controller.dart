@@ -55,7 +55,7 @@ class AdminController extends GetxController {
   static AdminController adminController = Get.find();
   LanguageController languageController = LanguageController.languageController;
 
-  final adminEntranceCode = 'alco-prod';
+  final adminEntranceCode = 'wow-prod';
 
   // Superior Admin
   Rx<String> _moneyCollectorInfo = Rx(

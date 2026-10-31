@@ -36,7 +36,6 @@ class LocationController extends GetxController {
         .map(
           (snapshot) => snapshot.docs.map((doc) {
             SupportedArea info = SupportedArea.fromJson(doc.data());
-            debug.log(info.toString());
             return info;
           }).toList(),
         );
