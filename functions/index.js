@@ -116,6 +116,20 @@ export const saveHostingAreas = onRequest(
 
         // Town/Institution 1
         hostingArea = {
+            hostingAreaId: "a4drbsfkrnds48dnmd",
+            hostingAreaName: "Umlazi",
+            hostingAreaImageURL: "hosting_areas/a4drbsfkrnds48dnmd.jpg",
+            sectionName: "D Section-Umlazi-Durban-Kwa Zulu Natal-South Africa",
+            pickUpArea: "Kwa Mnyandu (Mobile)",
+        };
+
+        hostingAreaReference = getFirestore().collection("hosting_areas")
+            .doc(hostingArea.hostingAreaId);
+
+        await hostingAreaReference.set(hostingArea);
+
+        // Town/Institution 2
+        hostingArea = {
             hostingAreaId: "g4drbsfkrnds48dnmd",
             hostingAreaName: "Durban Central",
             hostingAreaImageURL: "hosting_areas/g4drbsfkrnds48dnmd.jpg",
@@ -128,7 +142,7 @@ export const saveHostingAreas = onRequest(
 
         await hostingAreaReference.set(hostingArea);
 
-        // Town/Institution 2
+        // Town/Institution 3
         hostingArea = {
             hostingAreaId: "d4drbsfkrnds48dnmd",
             hostingAreaName: "UKZN",
@@ -1051,8 +1065,9 @@ export const createWonPriceSummary =
                     const isLive = competitionSnapshot.data().isLive;
 
 
-                    if (isOver && isLive) {
-                        // log('Competition is isOver and isLive...');
+                    // REMOVED && isLive
+                    if (isOver) {
+                        // log('Competition is isOver...');
                         reference.update({ isLive: false });
                         // log('Competition Is No Longer Live');
                         const wonPriceSummaryId =
@@ -1578,8 +1593,8 @@ export const createFakeDraws = onRequest(
                     townOrInstitutionName: "Durban Central",
                     townOrInstitutionNo: "7",
                 };
-                groupToWinPhoneNumber = "+27600000000";
-                groupToWinId = "dbn-central-fake-group-1";
+                groupToWinPhoneNumber = "+27630000000";
+                groupToWinId = "dbn-central-fake-group-4";
                 break;
             case 2: // UKZN
                 hostingAreaFK = "d4drbsfkrnds48dnmd";

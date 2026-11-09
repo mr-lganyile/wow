@@ -445,10 +445,10 @@ class HostInfoWidgetState extends State<HostInfoWidget> {
             if (widget.hostInfo.isCurrentlyViewed) {
               widget.hostInfo.setIsCurrentlyViewed(false);
             }
-            /*
+
             debug.log(
               'Show won price summary: ${countDownClock.remainingTime} competition.wonGroup ${competition.wonGroup == null}',
-            ); */
+            );
             return CompetitionResultWidget(
               wonPrice: competition.wonPrice!,
               wonGroup: competition.wonGroup!,

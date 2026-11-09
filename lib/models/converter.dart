@@ -5,6 +5,7 @@ import '/models/competitions/voucher_type.dart';
 import '/models/competitions/competition_state.dart';
 
 import 'locations/howard_area.dart';
+import 'locations/umlazi_area.dart';
 import 'locations/section_name.dart';
 import 'hosting areas/hosted_draw_state.dart';
 import 'locations/supported_area.dart';
@@ -118,7 +119,11 @@ class Converter {
     SectionName sectionName,
   ) {
     SupportedTownOrInstitution? supportedTownOrInstitution =
-        HowardArea.toSupportedTownOrInstitution(sectionName);
+        UmlaziArea.toSupportedTownOrInstitution(sectionName);
+
+    supportedTownOrInstitution ??= HowardArea.toSupportedTownOrInstitution(
+      sectionName,
+    );
 
     supportedTownOrInstitution ??= SupportedTownOrInstitution(
       cityFK: "1",
@@ -131,9 +136,8 @@ class Converter {
 
   // Default durban central [berea]
   static SupportedArea toSupportedArea(SectionName sectionName) {
-    SupportedArea? supportedArea = DurbanCentralArea.toSupportedArea(
-      sectionName,
-    );
+    SupportedArea? supportedArea = UmlaziArea.toSupportedArea(sectionName);
+    supportedArea ??= DurbanCentralArea.toSupportedArea(sectionName);
     supportedArea ??= HowardArea.toSupportedArea(sectionName);
 
     return supportedArea!;
@@ -141,14 +145,16 @@ class Converter {
 
   // Default to Berea
   static SectionName toSectionName(String section) {
-    SectionName? sectionName = DurbanCentralArea.toSectionName(section);
+    SectionName? sectionName = UmlaziArea.toSectionName(section);
+    sectionName ??= DurbanCentralArea.toSectionName(section);
     sectionName ??= HowardArea.toSectionName(section);
     return sectionName!;
   }
 
   // Default to Berea
   static String asString(SectionName sectionName) {
-    String? section = DurbanCentralArea.asString(sectionName);
+    String? section = UmlaziArea.asString(sectionName);
+    section ??= DurbanCentralArea.asString(sectionName);
     section ??= HowardArea.asString(sectionName);
 
     return section!;
@@ -172,10 +178,9 @@ class Converter {
   // Default to durban central
   static int townOrInstitutionAsNumber(TownOrInstitution townOrInstitution) {
     switch (townOrInstitution) {
-      /*
       case TownOrInstitution.umlazi:
         return 1;
-      case TownOrInstitution.mut:
+      /*case TownOrInstitution.mut:
         return 2;
       case TownOrInstitution.dut:
         return 3; */
@@ -206,10 +211,9 @@ class Converter {
   // Default to durban central
   static String townOrInstitutionAsString(TownOrInstitution townOrInstitution) {
     switch (townOrInstitution) {
-      /*
       case TownOrInstitution.umlazi:
         return 'Umlazi';
-      case TownOrInstitution.mut:
+      /*case TownOrInstitution.mut:
         return 'Mangosuthu (MUT)';
       case TownOrInstitution.dut:
         return 'DUT'; */
@@ -240,10 +244,9 @@ class Converter {
   // Default to durban central
   static TownOrInstitution toTownOrInstitution(String townOrInstitution) {
     switch (townOrInstitution) {
-      /*
       case 'Umlazi':
         return TownOrInstitution.umlazi;
-      case 'Mangosuthu (MUT)':
+      /*case 'Mangosuthu (MUT)':
         return TownOrInstitution.mut;
       case 'DUT':
         return TownOrInstitution.dut; */
