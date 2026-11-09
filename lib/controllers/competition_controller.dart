@@ -172,7 +172,7 @@ class CompetitionController extends GetxController {
           String host = Converter.townOrInstitutionAsString(
             wonPriceSummary.townOrInstitution.townOrInstitutionName,
           );
-          Get.snackbar('Error', 'Only $host Users May Comment.');
+          getSnapbar('Error', 'Only $host Users May Comment.');
         }
       }
     });

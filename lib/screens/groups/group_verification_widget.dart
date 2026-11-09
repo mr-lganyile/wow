@@ -12,10 +12,8 @@ import '../utils/globals.dart';
 class GroupVerificationWidget extends StatefulWidget {
   String verificationId;
 
-  GroupVerificationWidget({
-    Key? key,
-    required this.verificationId,
-  }) : super(key: key);
+  GroupVerificationWidget({Key? key, required this.verificationId})
+    : super(key: key);
 
   @override
   State<GroupVerificationWidget> createState() =>
@@ -39,24 +37,23 @@ class _GroupVerificationWidgetState extends State<GroupVerificationWidget> {
 
     try {
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
-          verificationId: widget.verificationId, smsCode: otpController.text);
+        verificationId: widget.verificationId,
+        smsCode: otpController.text,
+      );
       final auth = FirebaseAuth.instance;
       await auth.signInWithCredential(credential);
 
-      auth.currentUser!.getIdToken(true).then((token) async {
-        if (!sharedResourcesController.isLeaderValidated) {
-          sharedResourcesController.setIsLeaderValidated(true);
-          Get.back();
-        }
-      }).catchError((onError) {});
+      auth.currentUser!
+          .getIdToken(true)
+          .then((token) async {
+            if (!sharedResourcesController.isLeaderValidated) {
+              sharedResourcesController.setIsLeaderValidated(true);
+              Get.back();
+            }
+          })
+          .catchError((onError) {});
     } catch (error) {
-      getSnapbar(
-          // backgroundColor: snackBarBackgroundColor,
-          // duration: snackBarDuration,
-          // colorText: snackBarColorText,
-          // borderColor: snackBarBorderColor,
-          'Error',
-          'Wrong Verification Code.');
+      getSnapbar('Error', 'Wrong Verification Code.');
     } finally {
       sharedResourcesController.setShowProgressBar(false);
     }
@@ -75,14 +72,10 @@ class _GroupVerificationWidgetState extends State<GroupVerificationWidget> {
               Column(
                 children: [
                   _headingText(),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   _subHeadingText(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  _numberText()
+                  const SizedBox(height: 20),
+                  _numberText(),
                 ],
               ),
               Padding(
@@ -95,23 +88,21 @@ class _GroupVerificationWidgetState extends State<GroupVerificationWidget> {
                   controller: otpController,
                   decoration: InputDecoration(
                     labelText: 'OTP',
-                    prefixIcon:
-                        Icon(Icons.numbers, color: MyApplication.logoColor1),
+                    prefixIcon: Icon(
+                      Icons.numbers,
+                      color: MyApplication.logoColor1,
+                    ),
                     labelStyle: TextStyle(
                       fontSize: 14,
                       color: MyApplication.logoColor2,
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(6),
-                      borderSide: BorderSide(
-                        color: MyApplication.logoColor2,
-                      ),
+                      borderSide: BorderSide(color: MyApplication.logoColor2),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(6),
-                      borderSide: BorderSide(
-                        color: MyApplication.logoColor2,
-                      ),
+                      borderSide: BorderSide(color: MyApplication.logoColor2),
                     ),
                   ),
                   obscureText: false,
@@ -144,7 +135,7 @@ class _GroupVerificationWidgetState extends State<GroupVerificationWidget> {
                           ),
                         ),
                       ),
-                    )
+                    ),
             ],
           ),
         ),
@@ -153,27 +144,29 @@ class _GroupVerificationWidgetState extends State<GroupVerificationWidget> {
   }
 
   Widget _headingText() => Text(
-        'Verification',
-        style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 25,
-            color: MyApplication.attractiveColor1),
-      );
+    'Verification',
+    style: TextStyle(
+      fontWeight: FontWeight.w600,
+      fontSize: 25,
+      color: MyApplication.attractiveColor1,
+    ),
+  );
 
   Widget _subHeadingText() => const Text(
-        'Enter the code sent to te number.',
-        style: TextStyle(
-          fontWeight: FontWeight.w300,
-          fontSize: 15,
-          color: Colors.white38,
-        ),
-      );
+    'Enter the code sent to te number.',
+    style: TextStyle(
+      fontWeight: FontWeight.w300,
+      fontSize: 15,
+      color: Colors.white38,
+    ),
+  );
 
   Widget _numberText() => Text(
-        groupController.leaderPhoneNumber,
-        style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 15,
-            color: MyApplication.logoColor1),
-      );
+    groupController.leaderPhoneNumber,
+    style: TextStyle(
+      fontWeight: FontWeight.w500,
+      fontSize: 15,
+      color: MyApplication.logoColor1,
+    ),
+  );
 }

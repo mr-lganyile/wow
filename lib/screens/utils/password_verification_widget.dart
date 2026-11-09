@@ -127,7 +127,12 @@ class PasswordVerificationWidget extends StatelessWidget {
         if (user.password.compareTo(passwordEditingController.text) == 0) {
           if (user is my.User) {
             userController.loginUserUsingObject(user as my.User);
-            getSnapbar('Welcome', 'You Are Currently Logged in.');
+            getSnapbar(
+              'Welcome',
+              'You Are Currently Logged in.',
+              icon: Icon(Icons.login),
+              borderColor: MyApplication.logoColor1,
+            );
             sharedResourcesController.setShowPasswordVerificationProgressBar(
               false,
             );
@@ -135,7 +140,12 @@ class PasswordVerificationWidget extends StatelessWidget {
             Get.to(() => StartScreen());
           } else if (user is Admin) {
             adminController.loginAdminUsingObject(user as Admin);
-            getSnapbar('Welcome', 'You Are Currently Logged in.');
+            getSnapbar(
+              'Welcome',
+              'You Are Currently Logged in.',
+              icon: Icon(Icons.login),
+              borderColor: MyApplication.logoColor1,
+            );
             sharedResourcesController.setShowPasswordVerificationProgressBar(
               false,
             );

@@ -56,7 +56,7 @@ class AdminEntranceWidget extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               Text(
-                'Alco',
+                'Wow',
                 style: TextStyle(
                   fontSize: MyApplication.infoTextFontSize,
                   color: MyApplication.logoColor1,

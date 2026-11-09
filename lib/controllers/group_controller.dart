@@ -245,12 +245,9 @@ class GroupController extends GetxController {
     String username,
   ) async {
     if (phoneNumber.isEmpty) {
-      Get.snackbar(
-        'Error',
-        'Phone Number Is Required Before Picking An Image.',
-      );
+      getSnapbar('Error', 'Phone Number Is Required Before Picking An Image.');
     } else if (username.isEmpty) {
-      Get.snackbar('Error', 'Username Is Required Before Picking An Image.');
+      getSnapbar('Error', 'Username Is Required Before Picking An Image.');
     } else {
       final pickedImageFile = await ImagePicker().pickImage(
         source: ImageSource.gallery,
@@ -302,7 +299,7 @@ class GroupController extends GetxController {
 
         update();
       } else {
-        Get.snackbar('Error', 'Image Wasn\'t Picked.');
+        getSnapbar('Error', 'Image Wasn\'t Picked.');
       }
     }
   }
@@ -314,12 +311,12 @@ class GroupController extends GetxController {
     String username,
   ) async {
     if (phoneNumber.isEmpty) {
-      Get.snackbar(
+      getSnapbar(
         'Error',
         'Phone Number Is Required Before Capturing An Image.',
       );
     } else if (username.isEmpty) {
-      Get.snackbar('Error', 'Username Is Required Before Capturing An Image.');
+      getSnapbar('Error', 'Username Is Required Before Capturing An Image.');
     } else {
       final pickedImageFile = await ImagePicker().pickImage(
         source: ImageSource.camera,
@@ -372,7 +369,7 @@ class GroupController extends GetxController {
 
         update();
       } else {
-        Get.snackbar('Error', 'Image Wasn\'t Captured.');
+        getSnapbar('Error', 'Image Wasn\'t Captured.');
       }
     }
   }
@@ -400,11 +397,11 @@ class GroupController extends GetxController {
     String groupSpecificArea,
   ) async {
     if (groupName.isEmpty) {
-      Get.snackbar('Error', 'Group Name Is Missing.');
+      getSnapbar('Error', 'Group Name Is Missing.');
     } else if (groupSpecificArea.isEmpty) {
-      Get.snackbar('Error', 'Group Specific Area Is Missing.');
+      getSnapbar('Error', 'Group Specific Area Is Missing.');
     } else if (_leaderPhoneNumber.value == '') {
-      Get.snackbar('Error', 'Group Leaders\'s Phone Number Is Missing.');
+      getSnapbar('Error', 'Group Leaders\'s Phone Number Is Missing.');
     } else {
       final pickedImageFile = await ImagePicker().pickImage(
         source: ImageSource.gallery,
@@ -434,7 +431,7 @@ class GroupController extends GetxController {
 
         update();
       } else {
-        Get.snackbar('Error', 'Image Wasn\'t Picked.');
+        getSnapbar('Error', 'Image Wasn\'t Picked.');
         update();
       }
     }
@@ -447,13 +444,13 @@ class GroupController extends GetxController {
   ) async {
     if (groupName.isEmpty) {
       debug.log('Group Name Is Empty.');
-      Get.snackbar('Error', 'Group Name Is Missing.');
+      getSnapbar('Error', 'Group Name Is Missing.');
     } else if (groupSpecificArea.isEmpty) {
       debug.log('Group Specific Area Is Empty.');
-      Get.snackbar('Error', 'Group Specific Area Is Missing.');
+      getSnapbar('Error', 'Group Specific Area Is Missing.');
     } else if (_leaderPhoneNumber.value == '') {
       debug.log('Group Leader\'s Phone Number Is Empty Is Empty.');
-      Get.snackbar('Error', 'Group Leaders\'s Phone Number Is Missing.');
+      getSnapbar('Error', 'Group Leaders\'s Phone Number Is Missing.');
     } else {
       final pickedImageFile = await ImagePicker().pickImage(
         source: ImageSource.camera,
@@ -482,7 +479,7 @@ class GroupController extends GetxController {
 
         update();
       } else {
-        Get.snackbar('Error', 'Image Wasn\'t Picked.');
+        getSnapbar('Error', 'Image Wasn\'t Picked.');
       }
     }
   }
@@ -940,7 +937,7 @@ class GroupController extends GetxController {
     })).toList();
   }
 
-  activateOrDeactivateAllGroups(action) {
+  Future<void> activateOrDeactivateAllGroups(bool action) async {
     WriteBatch batch = firestore.batch();
     CollectionReference reference = firestore.collection('groups');
 

@@ -111,13 +111,13 @@ class UserController extends GetxController {
     String username,
   ) async {
     if (phoneNumber.isEmpty) {
-      Get.snackbar(
+      getSnapbar(
         'Error',
         'Phone Number Is Required Before Capturing An Image.',
       );
       debug.log('Phone Number Is Required Before Capturing An Image.');
     } else if (username.isEmpty) {
-      Get.snackbar('Error', 'Username Is Required Before Capturing An Image.');
+      getSnapbar('Error', 'Username Is Required Before Capturing An Image.');
       debug.log('Username Is Required Before Capturing An Image.');
     } else {
       final pickedImageFile = await ImagePicker().pickImage(
@@ -143,7 +143,7 @@ class UserController extends GetxController {
         debug.log('Image File Successfully Captured.');
         update();
       } else {
-        Get.snackbar('Error', 'Image Wasn\'t Captured.');
+        getSnapbar('Error', 'Image Wasn\'t Captured.');
         debug.log('Image Wasn\'t Captured');
       }
     }
@@ -154,13 +154,13 @@ class UserController extends GetxController {
     String username,
   ) async {
     if (phoneNumber.isEmpty) {
-      Get.snackbar(
+      getSnapbar(
         'Error',
         'Phone Number Is Required Before Capturing An Image.',
       );
       debug.log('Phone Number Is Required Before Capturing An Image');
     } else if (username.isEmpty) {
-      Get.snackbar('Error', 'Username Is Required Before Capturing An Image.');
+      getSnapbar('Error', 'Username Is Required Before Capturing An Image.');
       debug.log('Username Is Required Before Capturing An Image');
     } else {
       final pickedImageFile = await ImagePicker().pickImage(
@@ -186,7 +186,7 @@ class UserController extends GetxController {
         debug.log('Image File Successfully Captured');
         update();
       } else {
-        Get.snackbar('Error', 'Image Wasn\'t Captured.');
+        getSnapbar('Error', 'Image Wasn\'t Captured.');
         debug.log('Image Wasn\'t Captured');
       }
     }
@@ -256,7 +256,7 @@ class UserController extends GetxController {
     AbstractUser? user = getCurrentlyLoggenInUser();
 
     if (user != null) {
-      Get.snackbar("Saving Error", "Logout Before Registering New Users.");
+      getSnapbar("Saving Error", "Logout Before Registering New Users.");
       return UserSavingStatus.unathourized;
     }
 
@@ -281,7 +281,7 @@ class UserController extends GetxController {
 
         return UserSavingStatus.saved;
       } catch (error) {
-        Get.snackbar("Saving Error", "User Couldn'\t Be Created.");
+        getSnapbar("Saving Error", "User Couldn'\t Be Created.");
         debug.log(error.toString());
 
         return UserSavingStatus.alcoholCreationError;

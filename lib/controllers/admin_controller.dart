@@ -6,8 +6,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import '../main.dart';
 import '../models/competitions/money_bag.dart';
 import '../models/users/recruitment_history.dart';
 import '../models/users/abstract_user.dart';
@@ -178,12 +180,9 @@ class AdminController extends GetxController {
 
   void chooseAdminProfileImageFromGallery(String phoneNumber) async {
     if (phoneNumber.isEmpty) {
-      Get.snackbar(
-        'Error',
-        'Phone Number Is Required Before Picking An Image.',
-      );
+      getSnapbar('Error', 'Phone Number Is Required Before Picking An Image.');
     } else if (!isValidPhoneNumber(phoneNumber)) {
-      Get.snackbar('Error', 'Phone Number Is Invalid.');
+      getSnapbar('Error', 'Phone Number Is Invalid.');
     } else {
       final pickedImageFile = await ImagePicker().pickImage(
         source: ImageSource.gallery,
@@ -198,23 +197,25 @@ class AdminController extends GetxController {
           ),
         );
         _newAdminPhoneNumber = Rx<String?>(phoneNumber);
-        Get.snackbar('Image Status', 'Image File Successfully Picked.');
+        getSnapbar(
+          'Image Status',
+          'Image File Successfully Picked.',
+          icon: Icon(Icons.save_alt),
+          borderColor: MyApplication.logoColor1,
+        );
         update();
       } else {
-        Get.snackbar('Error', 'Image Wasn\'t Picked.');
+        getSnapbar('Error', 'Image Wasn\'t Picked.');
       }
     }
   }
 
   void captureAdminProfileImageWithCamera(String phoneNumber) async {
     if (phoneNumber.isEmpty) {
-      Get.snackbar(
-        'Error',
-        'Phone Number Is Required Before Picking An Image.',
-      );
+      getSnapbar('Error', 'Phone Number Is Required Before Picking An Image.');
       debug.log('Phone Number Is Required Before Picking An Image.');
     } else if (!isValidPhoneNumber(phoneNumber)) {
-      Get.snackbar('Error', 'Phone Number Is Invalid.');
+      getSnapbar('Error', 'Phone Number Is Invalid.');
       debug.log('Phone Number Is Invalid');
     } else {
       final pickedImageFile = await ImagePicker().pickImage(
@@ -232,10 +233,15 @@ class AdminController extends GetxController {
         _newAdminPhoneNumber = Rx<String?>(phoneNumber);
 
         debug.log('Image File Successfully Picked');
-        Get.snackbar('Image Status', 'Image File Successfully Picked.');
+        getSnapbar(
+          'Image Status',
+          'Image File Successfully Picked.',
+          icon: Icon(Icons.save_alt),
+          borderColor: MyApplication.logoColor1,
+        );
         update();
       } else {
-        Get.snackbar('Error', 'Image Wasn\'t Picked.');
+        getSnapbar('Error', 'Image Wasn\'t Picked.');
         debug.log('Image Wasn\'t Picked.');
       }
     }

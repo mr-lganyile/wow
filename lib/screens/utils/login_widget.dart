@@ -149,34 +149,34 @@ class LoginWidget extends StatelessWidget {
           verificationFailed: (FirebaseAuthException e) {
             if (e.code == 'invalid-phone-number') {
               Get.back();
-              Get.snackbar('Error', 'Invalid Number Entered, Try Again.');
+              getSnapbar('Error', 'Invalid Number Entered, Try Again.');
             } else if (e.code == 'missing-phone-number') {
               Get.back();
-              Get.snackbar(
+              getSnapbar(
                 'Error',
                 'The request was triggered but no phone number string was passed to the function.',
               );
             } else if (e.code == 'missing-verification-code') {
               Get.back();
-              Get.snackbar(
+              getSnapbar(
                 'Error',
                 'The PhoneAuthCredential was created with an empty SMS code.',
               );
             } else if (e.code == 'quota-exceeded') {
               Get.back();
-              Get.snackbar(
+              getSnapbar(
                 'Error',
                 'The SMS quota for your project or IP address has been temporarily exceeded',
               );
             } else if (e.code == 'too-many-requests') {
               Get.back();
-              Get.snackbar(
+              getSnapbar(
                 'Error',
                 'Too many requests have been made from this phone number',
               );
             } else {
               Get.back();
-              Get.snackbar('Error', 'Try Again.');
+              getSnapbar('Error', 'Try Again.');
             }
           },
           codeSent: (String verificationId, int? resendToken) async {

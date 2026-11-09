@@ -1,5 +1,9 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart' hide Notification;
+import 'package:flutter/material.dart' hide Notification;
+import 'package:wow/main.dart';
+
 import '../../models/locations/town_or_institution.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -172,7 +176,12 @@ class HostingAreaController extends GetxController {
     );
 
     if (storePickedImageFile != null) {
-      getSnapbar('Image Status', 'Image File Successfully Captured.');
+      getSnapbar(
+        'Image Status',
+        'Image File Successfully Captured.',
+        icon: Icon(Icons.save_alt),
+        borderColor: MyApplication.logoColor1,
+      );
     }
 
     // Share the chosen image file on Getx State Management.
@@ -491,7 +500,12 @@ class HostingAreaController extends GetxController {
             ),
           );
       }
-      getSnapbar('Image Status', 'Image File Successfully Chosen.');
+      getSnapbar(
+        'Image Status',
+        'Image File Successfully Chosen.',
+        icon: Icon(Icons.save_alt),
+        borderColor: MyApplication.logoColor1,
+      );
       update();
     }
   }

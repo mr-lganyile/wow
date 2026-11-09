@@ -91,10 +91,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   'UserSavingStatus.unathourized From VerificationScreen...',
                 );
                 getSnapbar(
-                  // backgroundColor: snackBarBackgroundColor,
-                  // duration: snackBarDuration,
-                  // colorText: snackBarColorText,
-                  // borderColor: snackBarBorderColor,
                   'Error',
                   'You Are Not Authorized To Register A New User.',
                 );
@@ -109,40 +105,19 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 debug.log(
                   'UserSavingStatus.adminAlreadyExist From VerificationScreen...',
                 );
-                getSnapbar(
-                  // backgroundColor: snackBarBackgroundColor,
-                  // duration: snackBarDuration,
-                  // colorText: snackBarColorText,
-                  // borderColor: snackBarBorderColor,
-                  'Error',
-                  'User Already Exist.',
-                );
+                getSnapbar('Error', 'User Already Exist.');
                 Get.back();
               } else if (value == UserSavingStatus.loginRequired) {
                 debug.log(
                   'UserSavingStatus.loginRequired From VerificationScreen...',
                 );
-                getSnapbar(
-                  // backgroundColor: snackBarBackgroundColor,
-                  // duration: snackBarDuration,
-                  // colorText: snackBarColorText,
-                  // borderColor: snackBarBorderColor,
-                  'Error',
-                  'Login Required.',
-                );
+                getSnapbar('Error', 'Login Required.');
                 Get.to(() => LoginWidget(forAdmin: widget.forAdmin));
               } else if (value == UserSavingStatus.incompleteData) {
                 debug.log(
                   'UserSavingStatus.incompleteData From VerificationScreen...',
                 );
-                getSnapbar(
-                  // backgroundColor: snackBarBackgroundColor,
-                  // duration: snackBarDuration,
-                  // colorText: snackBarColorText,
-                  // borderColor: snackBarBorderColor,
-                  'Error',
-                  'Incomplete Info.',
-                );
+                getSnapbar('Error', 'Incomplete Info.');
                 Get.back();
               } else {
                 Get.close(2);
@@ -152,14 +127,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
           .catchError((onError) {});
     } catch (error) {
       debug.log('Credentials Verified Unsuccessfully');
-      getSnapbar(
-        // backgroundColor: snackBarBackgroundColor,
-        // duration: snackBarDuration,
-        // colorText: snackBarColorText,
-        // borderColor: snackBarBorderColor,
-        'Error',
-        'Wrong Verification Code.',
-      );
+      getSnapbar('Error', 'Wrong Verification Code.');
       debug.log('$error');
     }
   }
@@ -190,14 +158,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
           })
           .catchError((onError) {});
     } catch (error) {
-      getSnapbar(
-        // backgroundColor: snackBarBackgroundColor,
-        // duration: snackBarDuration,
-        // colorText: snackBarColorText,
-        // borderColor: snackBarBorderColor,
-        'Error',
-        'Wrong Verification Code.',
-      );
+      getSnapbar('Error', 'Wrong Verification Code.');
       debug.log('Wrong Verification Code');
     }
   }

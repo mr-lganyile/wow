@@ -194,15 +194,33 @@ double blueIconsSize = 30;
 Widget getCircularProgressBar() =>
     Center(child: CircularProgressIndicator(color: backgroundResourcesColor));
 
-void getSnapbar(title, message) {
-  /* SnackBar(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      content: Opacity(
-        opacity: .7,
-        child: Container(), // your content
-      )); */
-  Get.snackbar(title, message);
+void getSnapbar(String title, message, {Icon? icon, Color? borderColor}) {
+  Get.showSnackbar(
+    GetSnackBar(
+      titleText: Text(
+        title,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: MyApplication.attractiveColor1,
+        ),
+      ),
+      messageText: Text(
+        message,
+        style: TextStyle(fontSize: 18, color: Colors.black),
+      ),
+      snackPosition: SnackPosition.TOP,
+      margin: EdgeInsets.symmetric(horizontal: 15),
+      borderRadius: 20,
+      borderColor: borderColor ?? Colors.red,
+      borderWidth: 5,
+      backgroundColor: MyApplication.logoColor2,
+      icon: icon ?? Icon(Icons.error, color: borderColor ?? borderColor),
+      shouldIconPulse: false,
+      duration: const Duration(seconds: 3),
+    ),
+  );
 }
 
 bool containsPlusAndNumbersOnly(String phoneNumber) {

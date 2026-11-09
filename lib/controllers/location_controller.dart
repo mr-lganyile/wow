@@ -7,8 +7,6 @@ import '/models/locations/supported_area.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
-import 'dart:developer' as debug;
-
 // Branch : supported_locations_resources_crud ->  supported_locations_resources_data_access
 class LocationController extends GetxController {
   FirebaseFirestore firestore;

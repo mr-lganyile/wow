@@ -158,6 +158,8 @@ class NotificationCreationWidgetState
                     getSnapbar(
                       'Notice Saved',
                       'Notice Published Successfully.',
+                      icon: Icon(Icons.save_alt),
+                      borderColor: MyApplication.logoColor1,
                     );
                     Get.to(() => AdminScreensWidget());
                   }
