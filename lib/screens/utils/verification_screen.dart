@@ -1,16 +1,19 @@
 import '../../controllers/user_controller.dart';
-import '../../controllers/shared_resources_controller.dart';
 import '../users/user_registration_widget.dart';
+import '/controllers/admin_controller.dart';
+import '../../controllers/shared_resources_controller.dart';
 import '/screens/utils/login_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/group_controller.dart';
 import '../../main.dart';
 
 import 'package:flutter/material.dart';
 
 import 'dart:developer' as debug;
 
+import '../admins/admin_screens_widget.dart';
 import 'globals.dart';
 import 'password_verification_widget.dart';
 
@@ -36,6 +39,8 @@ class VerificationScreen extends StatefulWidget {
 class _VerificationScreenState extends State<VerificationScreen> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController otpController = TextEditingController();
+  GroupController groupController = GroupController.instance;
+  AdminController adminController = AdminController.adminController;
   UserController userController = UserController.userController;
 
   SharedResourcesController sharedResourcesController =
@@ -81,54 +86,85 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
         bool hasSignedIn = (await callableFuntion.call(data)) as bool; */
 
-            Future<UserSavingStatus> alcoholSavingStatus = userController
-                .saveUser(/*auth.currentUser!.uid*/);
-            debug.log('forAdmin == false');
+            if (widget.forAdmin) {
+              adminController.setNewAdimUserId(auth.currentUser!.uid);
+              Future<AdminSavingStatus> adminSavingStatus = adminController
+                  .saveAdmin();
+              debug.log('forAdmin == true');
 
-            alcoholSavingStatus.then((value) {
-              if (value == UserSavingStatus.unathourized) {
-                debug.log(
-                  'UserSavingStatus.unathourized From VerificationScreen...',
-                );
-                getSnapbar(
-                  'Error',
-                  'You Are Not Authorized To Register A New User.',
-                );
-                Get.close(2);
-              } else if (value == UserSavingStatus.alcoholCreationError) {
-                debug.log(
-                  'UserSavingStatus.alcoholCreationError From VerificationScreen...',
-                );
-                getSnapbar("Saving Error", "User Couldn'\t Be Created.");
-                Get.close(2);
-              } else if (value == UserSavingStatus.adminAlreadyExist) {
-                debug.log(
-                  'UserSavingStatus.adminAlreadyExist From VerificationScreen...',
-                );
-                getSnapbar('Error', 'User Already Exist.');
-                Get.back();
-              } else if (value == UserSavingStatus.loginRequired) {
-                debug.log(
-                  'UserSavingStatus.loginRequired From VerificationScreen...',
-                );
-                getSnapbar('Error', 'Login Required.');
-                Get.to(() => LoginWidget(forAdmin: widget.forAdmin));
-              } else if (value == UserSavingStatus.incompleteData) {
-                debug.log(
-                  'UserSavingStatus.incompleteData From VerificationScreen...',
-                );
-                getSnapbar('Error', 'Incomplete Info.');
-                Get.back();
-              } else {
-                Get.close(2);
-              }
-            });
+              adminSavingStatus.then((value) {
+                if (value == AdminSavingStatus.unathourized) {
+                  getSnapbar(
+                    'Error',
+                    'You Are Not Authorized To Register An Admin.',
+                  );
+                  Get.close(2);
+                } else if (value == AdminSavingStatus.adminAlreadyExist) {
+                  getSnapbar('Error', 'Admin Already Exist.');
+                  Get.back();
+                } else if (value == AdminSavingStatus.loginRequired) {
+                  getSnapbar('Error', 'Login Required.');
+                  Get.to(() => LoginWidget(forAdmin: true));
+                } else if (value == AdminSavingStatus.incompleteData) {
+                  getSnapbar('Error', 'Incomplete Admin Info.');
+                  Get.back();
+                } else {
+                  getSnapbar(
+                    'Admin Saved',
+                    'Registration Succeeded.',
+                    borderColor: MyApplication.logoColor1,
+                  );
+                  // Disable progress bar for the current screen (verification screen) if needed.
+                  if (sharedResourcesController
+                      .showPhoneVerificationProgressBar) {
+                    sharedResourcesController
+                        .setShowPhoneVerificationProgressBar(false);
+                  }
+                  Get.to(() => AdminScreensWidget());
+                }
+              });
+            } else {
+              Future<UserSavingStatus> alcoholSavingStatus = userController
+                  .saveUser();
+              debug.log('forAdmin == false');
+
+              alcoholSavingStatus.then((value) {
+                if (value == UserSavingStatus.unathourized) {
+                  getSnapbar(
+                    'Error',
+                    'You Are Not Authorized To Register A New User.',
+                  );
+                  Get.close(2);
+                } else if (value == UserSavingStatus.alcoholCreationError) {
+                  getSnapbar("Saving Error", "User Couldn'\t Be Created.");
+                  Get.close(2);
+                } else if (value == UserSavingStatus.userAlreadyExist) {
+                  getSnapbar('Error', 'User Already Exist.');
+                  Get.back();
+                } else if (value == UserSavingStatus.loginRequired) {
+                  getSnapbar('Error', 'Login Required.');
+                  Get.to(() => LoginWidget(forAdmin: widget.forAdmin));
+                } else if (value == UserSavingStatus.incompleteData) {
+                  getSnapbar('Error', 'Incomplete Info.');
+                  Get.back();
+                } else {
+                  Get.close(2);
+                }
+              });
+            }
           })
           .catchError((onError) {});
     } catch (error) {
       debug.log('Credentials Verified Unsuccessfully');
-      getSnapbar('Error', 'Wrong Verification Code.');
-      debug.log('$error');
+      getSnapbar(
+        // backgroundColor: snackBarBackgroundColor,
+        // duration: snackBarDuration,
+        // colorText: snackBarColorText,
+        // borderColor: snackBarBorderColor,
+        'Error',
+        'Wrong Verification Code.',
+      );
+      debug.log('Wrong Verification Code');
     }
   }
 
@@ -144,17 +180,35 @@ class _VerificationScreenState extends State<VerificationScreen> {
       auth.currentUser!
           .getIdToken(true)
           .then((token) async {
-            await userController.findUser(auth.currentUser!.uid).then((user) {
-              if (user == null) {
-                getSnapbar('Registration Required', 'User Do Not Exist.');
-                Get.to(() => UserRegistrationWidget());
-              } else {
-                sharedResourcesController.setShowPhoneVerificationProgressBar(
-                  false,
-                );
-                Get.to(() => PasswordVerificationWidget(user: user));
-              }
-            });
+            if (widget.forAdmin) {
+              debug.log('admin login part');
+              await adminController.findAdmin(auth.currentUser!.uid).then((
+                admin,
+              ) {
+                if (admin == null) {
+                  getSnapbar('Registration Required', 'Admin Do Not Exist.');
+
+                  Get.close(2);
+                } else {
+                  sharedResourcesController.setShowPhoneVerificationProgressBar(
+                    false,
+                  );
+                  Get.to(() => PasswordVerificationWidget(user: admin));
+                }
+              });
+            } else {
+              await userController.findUser(auth.currentUser!.uid).then((user) {
+                if (user == null) {
+                  getSnapbar('Registration Required', 'User Do Not Exist.');
+                  Get.to(() => UserRegistrationWidget());
+                } else {
+                  sharedResourcesController.setShowPhoneVerificationProgressBar(
+                    false,
+                  );
+                  Get.to(() => PasswordVerificationWidget(user: user));
+                }
+              });
+            }
           })
           .catchError((onError) {});
     } catch (error) {
@@ -230,58 +284,60 @@ class _VerificationScreenState extends State<VerificationScreen> {
               ),
               GetBuilder<SharedResourcesController>(
                 builder: (_) {
-                  return /*sharedResourcesController
+                  return sharedResourcesController
                           .showPhoneVerificationProgressBar
                       ? Center(
                           child: CircularProgressIndicator(
                             color: MyApplication.logoColor2,
                           ),
                         )
-                      : */ Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 60,
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    decoration: BoxDecoration(
-                      color: MyApplication.logoColor1,
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    ),
-                    child: InkWell(
-                      onTap: () async {
-                        // Disable progress bar for the previous screen (login screen) if needed.
-                        if (sharedResourcesController.showLoginProgressBar) {
-                          sharedResourcesController.setShowLoginProgressBar(
-                            false,
-                          );
-                        }
-
-                        // Disable progress bar for the previous screen (signin screen) if needed.
-                        if (sharedResourcesController.showSigninProgressBar) {
-                          sharedResourcesController.setShowSigninProgressBar(
-                            false,
-                          );
-                        }
-
-                        // Enable progress bar for the current scree (verification screen) if needed.
-                        if (!sharedResourcesController
-                            .showPhoneVerificationProgressBar) {
-                          sharedResourcesController
-                              .setShowPhoneVerificationProgressBar(true);
-                        }
-
-                        widget.forLogin ? verifyLogin() : verifySignin();
-                      },
-                      child: const Center(
-                        child: Text(
-                          'Verify',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w700,
+                      : Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 60,
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          decoration: BoxDecoration(
+                            color: MyApplication.logoColor1,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(10),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                  );
+                          child: InkWell(
+                            onTap: () async {
+                              // Disable progress bar for the previous screen (login screen) if needed.
+                              if (sharedResourcesController
+                                  .showLoginProgressBar) {
+                                sharedResourcesController
+                                    .setShowLoginProgressBar(false);
+                              }
+
+                              // Disable progress bar for the previous screen (signin screen) if needed.
+                              if (sharedResourcesController
+                                  .showSigninProgressBar) {
+                                sharedResourcesController
+                                    .setShowSigninProgressBar(false);
+                              }
+
+                              // Enable progress bar for the current scree (verification screen) if needed.
+                              if (!sharedResourcesController
+                                  .showPhoneVerificationProgressBar) {
+                                sharedResourcesController
+                                    .setShowPhoneVerificationProgressBar(true);
+                              }
+
+                              widget.forLogin ? verifyLogin() : verifySignin();
+                            },
+                            child: const Center(
+                              child: Text(
+                                'Verify',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
                 },
               ),
             ],

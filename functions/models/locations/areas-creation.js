@@ -105,6 +105,36 @@ class AreasCreation extends LocationCreation {
         await this.locationController.createSupportedArea(howard.toJson())
     };
 
+    // Town/Institution 5
+    async createMayvilleSupportedAreas() {
+
+
+        const catoCrest = new SupportedArea("5",
+            "Cato Crest-Mayville-Durban-Kwa Zulu Natal-South Africa", "31");
+        await this.locationController.createSupportedArea(catoCrest.toJson());
+        const catoManor = new SupportedArea("5",
+            "Cato Manor-Mayville-Durban-Kwa Zulu Natal-South Africa", "32");
+        await this.locationController.createSupportedArea(catoManor.toJson());
+        const richView = new SupportedArea("5",
+            "Richview-Mayville-Durban-Kwa Zulu Natal-South Africa", "33");
+        await this.locationController.createSupportedArea(richView.toJson());
+        const masxha = new SupportedArea("5",
+            "Masxha-Mayville-Durban-Kwa Zulu Natal-South Africa", "34");
+        await this.locationController.createSupportedArea(masxha.toJson());
+        const bonela = new SupportedArea("5",
+            "Bonela-Mayville-Durban-Kwa Zulu Natal-South Africa", "35");
+        await this.locationController.createSupportedArea(bonela.toJson());
+        const nsimbini = new SupportedArea("5",
+            "Nsimbini-Mayville-Durban-Kwa Zulu Natal-South Africa", "36");
+        await this.locationController.createSupportedArea(nsimbini.toJson());
+        const galway = new SupportedArea("5",
+            "Galway-Mayville-Durban-Kwa Zulu Natal-South Africa", "89");
+        await this.locationController.createSupportedArea(galway.toJson());
+        const nkanini = new SupportedArea("5",
+            "Nkanini-Mayville-Durban-Kwa Zulu Natal-South Africa", "90");
+        await this.locationController.createSupportedArea(nkanini.toJson());
+    };
+
 
     // Town/Institution 7
     async createDurbanCentralSupportedAreas() {
@@ -124,8 +154,9 @@ class AreasCreation extends LocationCreation {
 
     async createSupportedAreas() {
 
-        await this.createUmlaziSupportedAreas();
-        await this.createUKZNSupportedAreas();
+        // await this.createUmlaziSupportedAreas();
+        // await this.createUKZNSupportedAreas();
+        await this.createMayvilleSupportedAreas();
         await this.createDurbanCentralSupportedAreas();
 
     };

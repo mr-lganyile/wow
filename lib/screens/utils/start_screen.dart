@@ -75,7 +75,7 @@ class _StartScreenState extends State<StartScreen>
                     backgroundImage: AssetImage('assets/logo.png'),
                   ),
                   applicationLegalese: 'Lealese',
-                  applicationName: 'Alco',
+                  applicationName: 'Wow',
                   applicationVersion: 'version 1.0.0',
                   children: [Text('Cheers!!!')],
                 ),
@@ -83,14 +83,13 @@ class _StartScreenState extends State<StartScreen>
             },
           ),
 
-          /*
           ListTile(
             leading: Icon(Icons.admin_panel_settings, size: listTilesIconSize),
             iconColor: MyApplication.logoColor1,
             textColor: MyApplication.logoColor2,
             title: Text('Admin', style: TextStyle(fontSize: listTilesFontSize)),
             onTap: () => Get.to(() => AdminEntranceWidget()),
-          ), */
+          ),
           ListTile(
             leading: Icon(Icons.group, size: listTilesIconSize),
             iconColor: MyApplication.logoColor1,

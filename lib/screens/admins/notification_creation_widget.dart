@@ -41,6 +41,7 @@ class NotificationCreationWidgetState
           Container(
             height: 100,
             width: 100,
+
             decoration: const BoxDecoration(
               image: DecorationImage(image: AssetImage('assets/logo.png')),
               shape: BoxShape.circle,
@@ -61,48 +62,55 @@ class NotificationCreationWidgetState
             color: MyApplication.logoColor2,
           ),
           const SizedBox(height: 10),
+
           Row(
             children: [
               Expanded(
-                child: RadioListTile(
-                  title: Text(
-                    stores[0],
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: MyApplication.logoColor1,
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: RadioListTile(
+                    title: Text(
+                      stores[0],
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: MyApplication.logoColor1,
+                      ),
                     ),
+                    value: stores[0],
+                    groupValue: stores[storesIndex],
+                    onChanged: (newValue) {
+                      if (newValue == 'For Some') {
+                        updateGenderIndex(1);
+                      } else {
+                        updateGenderIndex(0);
+                      }
+                    },
                   ),
-                  value: stores[0],
-                  groupValue: stores[storesIndex],
-                  onChanged: (newValue) {
-                    if (newValue == 'For Some') {
-                      updateGenderIndex(1);
-                    } else {
-                      updateGenderIndex(0);
-                    }
-                  },
                 ),
               ),
               Expanded(
-                child: RadioListTile(
-                  title: Text(
-                    stores[1],
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: MyApplication.logoColor1,
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: RadioListTile(
+                    title: Text(
+                      stores[1],
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: MyApplication.logoColor1,
+                      ),
                     ),
+                    value: stores[1],
+                    groupValue: stores[storesIndex],
+                    onChanged: (newValue) {
+                      if (newValue == 'For Some') {
+                        updateGenderIndex(1);
+                      } else {
+                        updateGenderIndex(0);
+                      }
+                    },
                   ),
-                  value: stores[1],
-                  groupValue: stores[storesIndex],
-                  onChanged: (newValue) {
-                    if (newValue == 'For Some') {
-                      updateGenderIndex(1);
-                    } else {
-                      updateGenderIndex(0);
-                    }
-                  },
                 ),
               ),
             ],

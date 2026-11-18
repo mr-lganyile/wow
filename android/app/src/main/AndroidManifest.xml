@@ -10,8 +10,9 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     
     <!--To Remove In Production-->
-    <!--android:usesCleartextTraffic="true" -->
+    
     <application
+        android:usesCleartextTraffic="true"
         android:label="wow"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">

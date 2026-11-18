@@ -114,20 +114,6 @@ export const saveHostingAreas = onRequest(
         let hostingArea;
         let hostingAreaReference;
 
-        // Town/Institution 1
-        hostingArea = {
-            hostingAreaId: "a4drbsfkrnds48dnmd",
-            hostingAreaName: "Umlazi",
-            hostingAreaImageURL: "hosting_areas/a4drbsfkrnds48dnmd.jpg",
-            sectionName: "D Section-Umlazi-Durban-Kwa Zulu Natal-South Africa",
-            pickUpArea: "Kwa Mnyandu (Mobile)",
-        };
-
-        hostingAreaReference = getFirestore().collection("hosting_areas")
-            .doc(hostingArea.hostingAreaId);
-
-        await hostingAreaReference.set(hostingArea);
-
         // Town/Institution 2
         hostingArea = {
             hostingAreaId: "g4drbsfkrnds48dnmd",
@@ -142,13 +128,13 @@ export const saveHostingAreas = onRequest(
 
         await hostingAreaReference.set(hostingArea);
 
-        // Town/Institution 3
+        // Town/Institution 5
         hostingArea = {
-            hostingAreaId: "d4drbsfkrnds48dnmd",
-            hostingAreaName: "UKZN",
-            hostingAreaImageURL: "hosting_areas/d4drbsfkrnds48dnmd.jpg",
-            sectionName: "Howard College (UKZN)-Durban-Kwa Zulu Natal-South Africa",
-            pickUpArea: "Howard College (Mobile)",
+            hostingAreaId: "e4drbsfkrnds48dnmd",
+            hostingAreaName: "Mayville",
+            hostingAreaImageURL: "hosting_areas/e4drbsfkrnds48dnmd.jpg",
+            sectionName: "Cato Crest-Mayville-Durban-Kwa Zulu Natal-South Africa",
+            pickUpArea: "Emafrigini (Mobile)",
         };
 
         hostingAreaReference = getFirestore().collection("hosting_areas")

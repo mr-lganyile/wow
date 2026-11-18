@@ -582,25 +582,27 @@ class HostingAreaController extends GetxController {
   bool hasAcceptableAdminCredentials() {
     return _adminCode.value != null &&
         (_adminCode.value!.compareTo('$drawKeyPart@NUZ') == 0 ||
-            _adminCode.value!.compareTo('$drawKeyPart@MUT') == 0 ||
-            _adminCode.value!.compareTo('$drawKeyPart@DUT') == 0 ||
+            // _adminCode.value!.compareTo('$drawKeyPart@MUT') == 0 ||
+            // _adminCode.value!.compareTo('$drawKeyPart@DUT') == 0 ||
             _adminCode.value!.compareTo('$drawKeyPart@UKZN') == 0 ||
-            _adminCode.value!.compareTo('$drawKeyPart@MAYV') == 0 ||
-            _adminCode.value!.compareTo('$drawKeyPart@SYD') == 0 ||
-            _adminCode.value!.compareTo('$drawKeyPart@DBNC') == 0 ||
-            _adminCode.value!.compareTo('$drawKeyPart@NANDA') == 0);
+            // _adminCode.value!.compareTo('$drawKeyPart@MAYV') == 0 ||
+            // _adminCode.value!.compareTo('$drawKeyPart@SYD') == 0 ||
+            _adminCode.value!.compareTo('$drawKeyPart@DBNC') ==
+                0 //||
+        //_adminCode.value!.compareTo('$drawKeyPart@NANDA') == 0
+        );
   }
 
   // Supposed To Be A Backend Function.
   void setAdminCode(String adminCode) {
-    if (adminCode.contains('$drawKeyPart@UKZN') &&
-        '$drawKeyPart@UKZN'.contains(adminCode)) {
-      _currentHostTownOrInstitution = Rx(TownOrInstitution.howardUKZN);
-      initiateHostingStore('d4drbsfkrnds48dnmd');
-    } else if (adminCode.contains('$drawKeyPart@DBNC') &&
+    if (adminCode.contains('$drawKeyPart@DBNC') &&
         '$drawKeyPart@DBNC'.contains(adminCode)) {
       _currentHostTownOrInstitution = Rx(TownOrInstitution.durbanCentral);
       initiateHostingStore('g4drbsfkrnds48dnmd');
+    } else if (adminCode.contains('$drawKeyPart@MAYV') &&
+        '$drawKeyPart@MAYV'.contains(adminCode)) {
+      _currentHostTownOrInstitution = Rx(TownOrInstitution.mayville);
+      initiateHostingStore('e4drbsfkrnds48dnmd');
     } else if (adminCode.isNotEmpty) {
       getSnapbar('Error', 'Incorrect Admin Code.');
     }
@@ -665,13 +667,15 @@ class HostingAreaController extends GetxController {
   // Supposed To Be A Backend Function.
   Future<HostedDrawSavingStatus> createHostedDraw() async {
     if (_adminCode.value!.compareTo('$drawKeyPart@NUZ') != 0 &&
-        _adminCode.value!.compareTo('$drawKeyPart@MUT') != 0 &&
-        _adminCode.value!.compareTo('$drawKeyPart@DUT') != 0 &&
-        _adminCode.value!.compareTo('$drawKeyPart@MAYV') != 0 &&
-        _adminCode.value!.compareTo('$drawKeyPart@SYD') != 0 &&
+        // _adminCode.value!.compareTo('$drawKeyPart@MUT') != 0 &&
+        // _adminCode.value!.compareTo('$drawKeyPart@DUT') != 0 &&
+        // _adminCode.value!.compareTo('$drawKeyPart@MAYV') != 0 &&
+        // _adminCode.value!.compareTo('$drawKeyPart@SYD') != 0 &&
         _adminCode.value!.compareTo('$drawKeyPart@UKZN') != 0 &&
-        _adminCode.value!.compareTo('$drawKeyPart@DBNC') != 0 &&
-        _adminCode.value!.compareTo('$drawKeyPart@NANDA') != 0) {
+        _adminCode.value!.compareTo('$drawKeyPart@DBNC') !=
+            0 // &&
+    // _adminCode.value!.compareTo('$drawKeyPart@NANDA') != 0
+    ) {
       return HostedDrawSavingStatus.loginRequired;
     } else if (!hasDate()) {
       getSnapbar('Error', 'Date Info Missing.');
@@ -887,9 +891,9 @@ class HostingAreaController extends GetxController {
     final array = groupToWinPhoneNumberAndId.split(' ');
 
     _groupToWinId = Rx(array[1]);
-    debug.log('Group To Win Id ${groupToWinId}');
+    debug.log('Group To Win Id $groupToWinId');
     _groupToWinPhoneNumber = Rx(array[0]);
-    debug.log('Group To Win Phone Number ${groupToWinPhoneNumber}');
+    debug.log('Group To Win Phone Number $groupToWinPhoneNumber');
     update();
   }
 }

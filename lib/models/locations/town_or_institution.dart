@@ -1,1 +1,1 @@
-enum TownOrInstitution { howardUKZN, durbanCentral, umlazi }
+enum TownOrInstitution { durbanCentral, mayville }

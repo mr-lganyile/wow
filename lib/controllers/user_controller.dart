@@ -19,6 +19,7 @@ import '../screens/utils/globals.dart';
 enum UserSavingStatus {
   incompleteData,
   adminAlreadyExist,
+  userAlreadyExist,
   loginRequired,
   unathourized,
   alcoholCreationError,
@@ -61,7 +62,7 @@ class UserController extends GetxController {
   );
   SupportedArea get newUserArea => _newUserArea.value;
 
-  late Rx<File?> _newUserProfileImageFile;
+  late Rx<File?> _newUserProfileImageFile = Rx(null);
   File? get newUserProfileImageFile => _newUserProfileImageFile.value;
 
   // ignore: prefer_final_fields

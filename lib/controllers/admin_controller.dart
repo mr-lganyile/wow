@@ -84,7 +84,7 @@ class AdminController extends GetxController {
   String? get newAdminPhoneNumber => _newAdminPhoneNumber.value;
 
   late Rx<TownOrInstitution> _newTownOrInstitutionName = Rx(
-    TownOrInstitution.howardUKZN,
+    TownOrInstitution.durbanCentral,
   );
   TownOrInstitution get newTownOrInstitutionName =>
       _newTownOrInstitutionName.value;
@@ -102,8 +102,13 @@ class AdminController extends GetxController {
     _newAdminPhoneNumber = Rx(phoneNumber);
   }
 
+  void setNewAdimUserId(String userId) {
+    _newAdminUserId = Rx(userId);
+  }
+
   void setNewTownOrInstitutionName(TownOrInstitution townOrInstitutionName) {
     _newTownOrInstitutionName = Rx<TownOrInstitution>(townOrInstitutionName);
+    update();
   }
 
   void setNewAdminIsFemale(bool isFemale) {
@@ -127,7 +132,7 @@ class AdminController extends GetxController {
     _newAdminProfileImage = Rx(null);
     _newAdminProfileImageURL = Rx('');
     _newAdminPhoneNumber = Rx(null);
-    _newTownOrInstitutionName = Rx(TownOrInstitution.howardUKZN);
+    _newTownOrInstitutionName = Rx(TownOrInstitution.durbanCentral);
     _newAdminIsFemale = Rx(true);
     _newAdminPassword = Rx('');
     update();
@@ -247,7 +252,7 @@ class AdminController extends GetxController {
     }
   }
 
-  void setAdminPassword(String password) {
+  void setNewAdminPassword(String password) {
     _newAdminPassword = Rx(password);
   }
 
@@ -490,24 +495,25 @@ class AdminController extends GetxController {
     return stream;
   }
 
-  Future<AdminSavingStatus> saveAdmin(String phoneNumber) async {
-    if (currentlyLoggedInAdmin == null) {
+  Future<AdminSavingStatus> saveAdmin() async {
+    /*if (currentlyLoggedInAdmin == null) {
       return AdminSavingStatus.loginRequired;
-    }
-
-    /*if (_newAdminUserId.value == null) {
-      return AdminSavingStatus.incompleteData;
     } */
+
+    if (_newAdminUserId.value == null) {
+      return AdminSavingStatus.incompleteData;
+    }
 
     DocumentReference adminReference = firestore
         .collection('admins')
-        .doc(/*_newAdminUserId.value*/);
+        .doc(newAdminUserId);
 
     debug.log('Admin Document Reference Created...');
 
     return adminReference
         .snapshots()
         .map((adminDoc) async {
+          /*
           if (currentlyLoggedInAdmin == null) {
             debug.log('Login required');
             return AdminSavingStatus.loginRequired;
@@ -516,7 +522,7 @@ class AdminController extends GetxController {
           if (!(currentlyLoggedInAdmin as Admin).isSuperior) {
             debug.log('Unathourized');
             return AdminSavingStatus.unathourized;
-          }
+          } */
 
           if (_newAdminPhoneNumber.value != null &&
               (!isValidPhoneNumber(_newAdminPhoneNumber.value!) ||

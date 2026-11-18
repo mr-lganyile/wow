@@ -45,8 +45,7 @@ class _HomeWidgetState extends State<HomeWidget> {
       );
     } else {
       wonPriceSummariesStream = competitionController.readAreaWonPriceSummaries(
-        Converter.townOrInstitutionAsNumber((user as Admin).townOrInstitution)
-            as String,
+        '${Converter.townOrInstitutionAsNumber((user as Admin).townOrInstitution)}',
       );
     }
   }

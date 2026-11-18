@@ -4,8 +4,8 @@ import '/models/competitions/voucher_type.dart';
 
 import '/models/competitions/competition_state.dart';
 
-import 'locations/howard_area.dart';
-import 'locations/umlazi_area.dart';
+import 'locations/mayville_area.dart';
+
 import 'locations/section_name.dart';
 import 'hosting areas/hosted_draw_state.dart';
 import 'locations/supported_area.dart';
@@ -119,11 +119,7 @@ class Converter {
     SectionName sectionName,
   ) {
     SupportedTownOrInstitution? supportedTownOrInstitution =
-        UmlaziArea.toSupportedTownOrInstitution(sectionName);
-
-    supportedTownOrInstitution ??= HowardArea.toSupportedTownOrInstitution(
-      sectionName,
-    );
+        MayvilleArea.toSupportedTownOrInstitution(sectionName);
 
     supportedTownOrInstitution ??= SupportedTownOrInstitution(
       cityFK: "1",
@@ -136,26 +132,24 @@ class Converter {
 
   // Default durban central [berea]
   static SupportedArea toSupportedArea(SectionName sectionName) {
-    SupportedArea? supportedArea = UmlaziArea.toSupportedArea(sectionName);
+    SupportedArea? supportedArea = MayvilleArea.toSupportedArea(sectionName);
     supportedArea ??= DurbanCentralArea.toSupportedArea(sectionName);
-    supportedArea ??= HowardArea.toSupportedArea(sectionName);
 
     return supportedArea!;
   }
 
   // Default to Berea
   static SectionName toSectionName(String section) {
-    SectionName? sectionName = UmlaziArea.toSectionName(section);
+    SectionName? sectionName = MayvilleArea.toSectionName(section);
     sectionName ??= DurbanCentralArea.toSectionName(section);
-    sectionName ??= HowardArea.toSectionName(section);
+
     return sectionName!;
   }
 
   // Default to Berea
   static String asString(SectionName sectionName) {
-    String? section = UmlaziArea.asString(sectionName);
+    String? section = MayvilleArea.asString(sectionName);
     section ??= DurbanCentralArea.asString(sectionName);
-    section ??= HowardArea.asString(sectionName);
 
     return section!;
   }
@@ -178,18 +172,18 @@ class Converter {
   // Default to durban central
   static int townOrInstitutionAsNumber(TownOrInstitution townOrInstitution) {
     switch (townOrInstitution) {
-      case TownOrInstitution.umlazi:
+      /*case TownOrInstitution.umlazi:
         return 1;
-      /*case TownOrInstitution.mut:
+      case TownOrInstitution.mut:
         return 2;
       case TownOrInstitution.dut:
-        return 3; */
+        return 3; 
       case TownOrInstitution.howardUKZN:
-        return 4;
-      /*
+        return 4;*/
+
       case TownOrInstitution.mayville:
         return 5;
-      case TownOrInstitution.sydenham:
+      /*case TownOrInstitution.sydenham:
         return 6;
       case TownOrInstitution.nanda:
         return 8;
@@ -211,15 +205,15 @@ class Converter {
   // Default to durban central
   static String townOrInstitutionAsString(TownOrInstitution townOrInstitution) {
     switch (townOrInstitution) {
-      case TownOrInstitution.umlazi:
+      /*case TownOrInstitution.umlazi:
         return 'Umlazi';
-      /*case TownOrInstitution.mut:
+      case TownOrInstitution.mut:
         return 'Mangosuthu (MUT)';
       case TownOrInstitution.dut:
-        return 'DUT'; */
+        return 'DUT'; *
       case TownOrInstitution.howardUKZN:
         return 'Howard College (UKZN)';
-      /*
+      
       case TownOrInstitution.westvilleUKZN:
         return 'Westville (UKZN)';
       case TownOrInstitution.nelsonMandelUKZN:
@@ -227,9 +221,10 @@ class Converter {
       case TownOrInstitution.edgewoodUKZN:
         return 'Edgewood (UKZN)';
       case TownOrInstitution.pmbUKZN:
-        return 'PMB (UKZN)';
+        return 'PMB (UKZN)'; 
+        */
       case TownOrInstitution.mayville:
-        return 'Mayville';
+        return 'Mayville'; /*
       case TownOrInstitution.sydenham:
         return 'Sydenham';
       case TownOrInstitution.nanda:
@@ -244,15 +239,15 @@ class Converter {
   // Default to durban central
   static TownOrInstitution toTownOrInstitution(String townOrInstitution) {
     switch (townOrInstitution) {
-      case 'Umlazi':
+      /*case 'Umlazi':
         return TownOrInstitution.umlazi;
-      /*case 'Mangosuthu (MUT)':
+      case 'Mangosuthu (MUT)':
         return TownOrInstitution.mut;
       case 'DUT':
-        return TownOrInstitution.dut; */
+        return TownOrInstitution.dut; 
       case 'Howard College (UKZN)':
         return TownOrInstitution.howardUKZN;
-      /*
+      
       case 'Westville (UKZN)':
         return TownOrInstitution.westvilleUKZN;
       case 'Nelson Mandela (UKZN)':
@@ -260,10 +255,10 @@ class Converter {
       case 'Edgewood (UKZN)':
         return TownOrInstitution.edgewoodUKZN;
       case 'PMB (UKZN)':
-        return TownOrInstitution.pmbUKZN;
+        return TownOrInstitution.pmbUKZN; */
       case 'Mayville':
         return TownOrInstitution.mayville;
-      case 'Sydenham':
+      /*case 'Sydenham':
         return TownOrInstitution.sydenham;
       case 'Nanda':
         return TownOrInstitution.nanda;

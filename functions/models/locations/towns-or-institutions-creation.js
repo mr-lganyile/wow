@@ -11,12 +11,11 @@ class TownsOrInstitutionsCreation extends LocationCreation {
 
     async createSupportedTownsOrInstitutions() {
 
-        const howard = new SupportedTownOrInstitution("1", "Howard College (UKZN)", "4");
-        await this.locationController.createSupportedTownsOrInstitution(howard.toJson());
-
         const durbanCentral = new SupportedTownOrInstitution("1", "Durban Central", "7");
         await this.locationController.createSupportedTownsOrInstitution(durbanCentral.toJson());
 
+        const mayville = new SupportedTownOrInstitution("1", "Mayville", "5");
+        await this.locationController.createSupportedTownsOrInstitution(mayville.toJson());
 
     }
 }

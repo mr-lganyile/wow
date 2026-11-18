@@ -17,6 +17,9 @@ import 'controllers/group_controller.dart';
 
 import 'controllers/shared_resources_controller.dart';
 import 'firebase_options.dart';
+import 'screens/admins/admin_registration_widget.dart'
+    show AdminRegistrationWidget;
+import 'screens/admins/admin_screens_widget.dart';
 import 'screens/utils/start_screen.dart';
 
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
@@ -140,7 +143,7 @@ Future<void> main() async {
     // 1. Debug provider
     // 2. Safety Net provider
     // 3. Play Integrity provider
-    androidProvider: AndroidProvider.playIntegrity,
+    androidProvider: AndroidProvider.debug,
     // Default provider for iOS/macOS is the Device Check provider. You can use the "AppleProvider" enum to choose
     // your preferred provider. Choose from:
     // 1. Debug provider
@@ -149,14 +152,14 @@ Future<void> main() async {
     // 4. App Attest provider with fallback to Device Check provider (App Attest provider is only available on iOS 14.0+, macOS 14.0+)
     // appleProvider: AppleProvider.appAttest,
   );
-  /*
+
   // Ideal time to initialize
   await FirebaseAuth.instance.useAuthEmulator('127.0.0.1', 9099);
   await FirebaseStorage //.instance
-      .instanceFor(bucket: "gs://alco-prod-45f94.firebasestorage.app")
+      .instanceFor(bucket: "gs://wow-we-won.firebasestorage.app")
       .useStorageEmulator('127.0.0.1', 9199);
   FirebaseFunctions.instance.useFunctionsEmulator('127.0.0.1', 5001);
-  FirebaseFirestore.instance.useFirestoreEmulator('127.0.0.1', 8080); */
+  FirebaseFirestore.instance.useFirestoreEmulator('127.0.0.1', 8080);
 
   runApp(MyApplication());
 }
@@ -263,7 +266,8 @@ class _MyApplicationState extends State<MyApplication> {
           secondaryHeaderColor: const Color.fromARGB(115, 231, 195, 214),
         ),
         home: StartScreen(),
-
+        // home: AdminRegistrationWidget(),
+        // home: AdminScreensWidget(),
         // Make sure to create a draw given there are groups belonging to the host's location.
       ),
     );
