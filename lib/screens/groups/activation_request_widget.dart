@@ -342,7 +342,10 @@ class ActivationRequestWidget extends StatelessWidget {
             groupController.setShowProgressIndicator(true);
             Future<ActivationRequestSavingStatus>
             activationRequestSavingStatus = groupController
-                .saveActivationRequest(voucherCodeEditingController.text);
+                .saveActivationRequest(
+                  voucherCodeEditingController.text,
+                  group.groupCreatorPhoneNumber,
+                );
             groupController.setShowProgressIndicator(false);
 
             activationRequestSavingStatus.then((status) {

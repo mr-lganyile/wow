@@ -160,6 +160,7 @@ class GroupController extends GetxController {
 
   Future<ActivationRequestSavingStatus> saveActivationRequest(
     String voucher,
+    String groupPhoneNumber,
   ) async {
     if (voucher.isEmpty) {
       return ActivationRequestSavingStatus.voucherNotProvided;
@@ -186,6 +187,7 @@ class GroupController extends GetxController {
       voucherType: newActivationRequestVoucherType,
       requestDate: null,
       groupFK: newActivationRequestGroupId!,
+      groupPhoneNumber: groupPhoneNumber,
       groupCreatorImageURL: newActivationRequestGroupCreatorImageURL!,
       voucher: voucher,
       isApproved: false,
@@ -859,12 +861,8 @@ class GroupController extends GetxController {
     return stream;
   }
 
-  Future<DocumentSnapshot<Object?>> readSingleGroup(
-    String groupCreatorPhoneNumber,
-  ) {
-    DocumentReference reference = firestore
-        .collection('groups')
-        .doc(groupCreatorPhoneNumber);
+  Future<DocumentSnapshot<Object?>> readSingleGroup(String groupId) {
+    DocumentReference reference = firestore.collection('groups').doc(groupId);
 
     return reference.get();
   }

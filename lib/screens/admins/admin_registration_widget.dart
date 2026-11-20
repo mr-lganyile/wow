@@ -328,11 +328,11 @@ class AdminRegistrationWidget extends StatelessWidget {
 
                 const SizedBox(height: 5),
 
-                sharedResourcesController.showSigninProgressBar
-                    ? SizedBox(child: getCircularProgressBar())
-                    : GetBuilder<shared.SharedResourcesController>(
-                        builder: (_) {
-                          return Column(
+                GetBuilder<shared.SharedResourcesController>(
+                  builder: (_) {
+                    return sharedResourcesController.showSigninProgressBar
+                        ? SizedBox(child: getCircularProgressBar())
+                        : Column(
                             children: [
                               // Sign Up User
                               Container(
@@ -512,8 +512,8 @@ class AdminRegistrationWidget extends StatelessWidget {
                               const SizedBox(height: 10),
                             ],
                           );
-                        },
-                      ),
+                  },
+                ),
               ],
             ),
           ),

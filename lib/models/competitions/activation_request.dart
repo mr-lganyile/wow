@@ -6,7 +6,8 @@ class ActivationRequest implements Comparable<ActivationRequest> {
   String activationRequestId;
   VoucherType voucherType;
   DateTime? requestDate;
-  String groupFK;
+  String? groupFK;
+  String groupPhoneNumber;
   String? groupCreatorImageURL;
   String voucher;
   bool? isApproved;
@@ -15,41 +16,44 @@ class ActivationRequest implements Comparable<ActivationRequest> {
   Timestamp? requestDateTimestamp;
   String? moneyCollectorFK;
 
-  ActivationRequest(
-      {required this.activationRequestId,
-      this.moneyCollectorFK,
-      this.approvedByAdminUserId,
-      required this.voucherType,
-      this.requestDate,
-      this.requestDateTimestamp,
-      required this.groupFK,
-      this.groupCreatorImageURL,
-      required this.voucher,
-      this.isChecked = false,
-      this.isApproved});
+  ActivationRequest({
+    required this.activationRequestId,
+    this.moneyCollectorFK,
+    this.approvedByAdminUserId,
+    required this.voucherType,
+    this.requestDate,
+    this.requestDateTimestamp,
+    this.groupFK,
+    required this.groupPhoneNumber,
+    this.groupCreatorImageURL,
+    required this.voucher,
+    this.isChecked = false,
+    this.isApproved,
+  });
 
   Map<String, dynamic> toJson() => {
-        'activationRequestId': activationRequestId,
-        'moneyCollectorFK': moneyCollectorFK,
-        'approvedByAdminUserId': approvedByAdminUserId,
-        'voucherType': Converter.toVoucherAsString(voucherType),
-        'requestDateTimestamp': requestDateTimestamp,
-        'requestDate': requestDate == null
-            ? null
-            : {
-                'year': requestDate!.year,
-                'month': requestDate!.month,
-                'day': requestDate!.day,
-                'hour': requestDate!.hour,
-                'minute': requestDate!.minute,
-                'second': requestDate!.second
-              },
-        'isChecked': isChecked,
-        'isApproved': isApproved,
-        'groupFK': groupFK,
-        'groupCreatorImageURL': groupCreatorImageURL,
-        'voucher': voucher,
-      };
+    'activationRequestId': activationRequestId,
+    'moneyCollectorFK': moneyCollectorFK,
+    'approvedByAdminUserId': approvedByAdminUserId,
+    'voucherType': Converter.toVoucherAsString(voucherType),
+    'requestDateTimestamp': requestDateTimestamp,
+    'requestDate': requestDate == null
+        ? null
+        : {
+            'year': requestDate!.year,
+            'month': requestDate!.month,
+            'day': requestDate!.day,
+            'hour': requestDate!.hour,
+            'minute': requestDate!.minute,
+            'second': requestDate!.second,
+          },
+    'isChecked': isChecked,
+    'isApproved': isApproved,
+    'groupFK': groupFK,
+    'groupPhoneNumber': groupPhoneNumber,
+    'groupCreatorImageURL': groupCreatorImageURL,
+    'voucher': voucher,
+  };
 
   void setIsApproved(isApproved) {
     this.isApproved = isApproved;
@@ -57,26 +61,28 @@ class ActivationRequest implements Comparable<ActivationRequest> {
 
   factory ActivationRequest.fromJson(dynamic json) {
     return ActivationRequest(
-        activationRequestId: json['activationRequestId'],
-        moneyCollectorFK: json['moneyCollectorFK'],
-        approvedByAdminUserId: json['approvedByAdminUserId'],
-        voucherType: Converter.toVoucherType(json['voucherType']),
-        requestDate: json['requestDate'] != null
-            ? DateTime(
-                json['requestDate']['year'],
-                json['requestDate']['month'],
-                json['requestDate']['day'],
-                json['requestDate']['hour'],
-                json['requestDate']['minute'],
-                json['requestDate']['second'],
-              )
-            : null,
-        requestDateTimestamp: json['requestDateTimestamp'],
-        isChecked: json['isChecked'],
-        isApproved: json['isApproved'],
-        groupFK: json['groupFK'],
-        groupCreatorImageURL: json['groupCreatorImageURL'],
-        voucher: json['voucher']);
+      activationRequestId: json['activationRequestId'],
+      moneyCollectorFK: json['moneyCollectorFK'],
+      approvedByAdminUserId: json['approvedByAdminUserId'],
+      voucherType: Converter.toVoucherType(json['voucherType']),
+      requestDate: json['requestDate'] != null
+          ? DateTime(
+              json['requestDate']['year'],
+              json['requestDate']['month'],
+              json['requestDate']['day'],
+              json['requestDate']['hour'],
+              json['requestDate']['minute'],
+              json['requestDate']['second'],
+            )
+          : null,
+      requestDateTimestamp: json['requestDateTimestamp'],
+      isChecked: json['isChecked'],
+      isApproved: json['isApproved'],
+      groupFK: json['groupFK'],
+      groupPhoneNumber: json['groupPhoneNumber'],
+      groupCreatorImageURL: json['groupCreatorImageURL'],
+      voucher: json['voucher'],
+    );
   }
 
   @override

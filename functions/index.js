@@ -68,7 +68,7 @@ const fakeUsers = new FakeUsers();
 // http://127.0.0.1:5001/wow-we-won/africa-south1/createFakeUsers
 // http://127.0.0.1:5001/wow-we-won/africa-south1/saveHostingAreas
 // http://127.0.0.1:5001/wow-we-won/africa-south1/saveFakeAdmins
-// http://127.0.0.1:5001/wow-we-won/africa-south1/createFakeGroups?hostIndex=7
+// http://127.0.0.1:5001/wow-we-won/africa-south1/createFakeGroups?hostIndex=1
 // http://127.0.0.1:5001/wow-we-won/africa-south1/createFakeDraws?hostIndex=7
 // http://127.0.0.1:5001/wow-we-won/africa-south1/convertToCompetitions
 // http://127.0.0.1:5001/wow-we-won/africa-south1/createFakeActivationRequests
@@ -734,13 +734,15 @@ export const updateActivationRequestAndGroup = onDocumentCreated({
         moneyCollectorFK: event.data.data().moneyCollectorFK,
         requestDateTimestamp: event.data.data().requestDateTimestamp,
         groupFK: event.data.data().groupFK,
+        groupPhoneNumber: event.data.data().groupPhoneNumber,
         groupCreatorImageURL: event.data.data().groupCreatorImageURL,
         voucher: event.data.data().voucher,
         isApproved: event.data.data().isApproved,
         isChecked: event.data.data().isChecked
     };
-    /*logger.log(`About To Update An Activation Reqeust For A Group Object With ID
-    ${event.data.data().groupFK}.`);*/
+    /*
+    logger.log(`About To Update An Activation Reqeust For A Group Object With ID
+    ${event.data.data().groupFK}.`); */
 
     return await groupReference.update({
         activationRequest: activationRequest
@@ -887,7 +889,7 @@ export const firstMoneyBagAndActivationRequestsUpdate = onDocumentCreated(
         let reference = getFirestore().collection("money_bags").doc(event.data.data().moneyCollectorBagId);
 
 
-
+        logger.log('about to batch update moneyCollectorRecievedBy & moneyCollectorRecievedByTimeStamp')
         /*await reference.update({
             moneyCollectorRecievedBy: justNow,
             moneyCollectorRecievedByTimeStamp: now,
@@ -907,6 +909,7 @@ export const firstMoneyBagAndActivationRequestsUpdate = onDocumentCreated(
             groupFK = key.split(' ')[0];
             activationRequestId = key.split(' ')[1];
             color = value;
+            logger.log(`groupFK ${groupFK}\tactivationRequestId ${activationRequestId}\tcolor ${color}`)
             reference = getFirestore().collection('activation_requests').doc(activationRequestId);
             /*await reference.update({
                 moneyCollectorFK: event.data.data().moneyCollectorBagId,
@@ -1146,7 +1149,7 @@ export const approveOrDisapproveActivationRequests = onDocumentUpdated(
 
         const reference = getFirestore()
             .collection("money_bags")
-            .doc(event.data.data().moneyCollectorBagId);
+            .doc(event.params.moneyBagId);
 
         reference.onSnapshot((moneyBagSnapshot) => {
             if (moneyBagSnapshot.exists && moneyBagSnapshot.data().hasMoneyCollectorSubmitted) {
@@ -1749,7 +1752,8 @@ export const createFakeActivationRequests = onRequest(
             requestDateTimestamp: null,
             isApproved: null,
             isChecked: false,
-            groupFK: '+27600000000',
+            groupFK: 'dbn-central-fake-group-1',
+            groupPhoneNumber: '+27600000000',
             groupCreatorImageURL: 'durban central/group_members/+27600000000/profile_images/+27600000000.jpg',
             voucher: '12345678909876',
         };
@@ -1768,7 +1772,8 @@ export const createFakeActivationRequests = onRequest(
             requestDateTimestamp: null,
             isApproved: false,
             isChecked: false,
-            groupFK: '+27610000000',
+            groupFK: 'dbn-central-fake-group-2',
+            groupPhoneNumber: '+27610000000',
             groupCreatorImageURL: 'durban central/group_members/+27610000000/profile_images/+27610000000.jpg',
             voucher: '9892793839876',
         };
@@ -1786,7 +1791,8 @@ export const createFakeActivationRequests = onRequest(
             requestDateTimestamp: null,
             isApproved: null,
             isChecked: false,
-            groupFK: '+27620000000',
+            groupFK: 'dbn-central-fake-group-3',
+            groupPhoneNumber: '+27620000000',
             groupCreatorImageURL: 'durban central/group_members/+27620000000/profile_images/+27620000000.jpg',
             voucher: '5342573848363846',
         };

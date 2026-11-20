@@ -102,14 +102,14 @@ class LoginWidget extends StatelessWidget {
                   ),
                   child: GetBuilder<SharedResourcesController>(
                     builder: (_) {
-                      return proceedButton(context);
-                      /* !sharedResourcesController.showLoginProgressBar
+                      // return proceedButton(context);
+                      return !sharedResourcesController.showLoginProgressBar
                           ? proceedButton(context)
                           : Center(
                               child: CircularProgressIndicator(
                                 color: MyApplication.logoColor2,
                               ),
-                            );*/
+                            );
                     },
                   ),
                 ),

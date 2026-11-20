@@ -61,11 +61,13 @@ class AdminController extends GetxController {
 
   // Superior Admin
   Rx<String> _moneyCollectorInfo = Rx(
-    '+27611111111 @Mayville wulep0IRp6frpI3CzqaxGUxTKBb2',
+    // MAKE SURE AN ADMIN WITH THE FOLLOWING CREDENTIALS EXIST, OTHERWISE AN ERROR WILL ARISE.
+    '+27611111111 @Durban Central 8N4M0xigNFKuwsOFBH1UfH1LkV0L',
   );
   String get moneyCollectorInfo => _moneyCollectorInfo.value;
 
-  Rx<AdminType> _newAdminType = Rx(AdminType.groupRegistery);
+  // to be changed to AdminType.groupRegistery
+  Rx<AdminType> _newAdminType = Rx(AdminType.groupRegisteryAndmoneyCollector);
   AdminType get newAdminType => _newAdminType.value;
 
   Rx<Admin?> _currentlyLoggedInAdmin = Rx(null);
@@ -271,7 +273,10 @@ class AdminController extends GetxController {
   }
 
   Future<void> saveMoneyBag(Map<String, String> relationships) async {
-    String moneyCollectorAdminFK = _moneyCollectorInfo.value.split(' ')[2];
+    int lastIndex = _moneyCollectorInfo.value.split(' ').length - 1;
+    String moneyCollectorAdminFK = _moneyCollectorInfo.value.split(
+      ' ',
+    )[lastIndex];
 
     MoneyBag moneyBag = MoneyBag(
       moneyCollectorBagId: moneyCollectorAdminFK, // Reciever of the bag.
@@ -284,8 +289,12 @@ class AdminController extends GetxController {
         .doc(moneyCollectorAdminFK);
 
     if (relationships.isNotEmpty) {
+      debug.log('money bag about to be saved.');
       await moneyBagReference.set(moneyBag.toJson());
+
       relationships.clear();
+    } else {
+      debug.log('relationships map is empty, so no money bag saved.');
     }
   }
 
@@ -495,6 +504,32 @@ class AdminController extends GetxController {
     return stream;
   }
 
+  String trimmedImageURL() {
+    String host = Converter.townOrInstitutionAsString(
+      newTownOrInstitutionName,
+    ).toLowerCase();
+
+    if (!_newAdminProfileImageURL.value!.contains('/$host') ||
+        !_newAdminProfileImageURL.value!.contains('?')) {
+      return _newAdminProfileImageURL.value!
+          .substring(
+            _newAdminProfileImageURL.value!.indexOf('/o/') + 2,
+            _newAdminProfileImageURL.value!.indexOf('?'),
+          )
+          .replaceAll('%2F', '/')
+          .replaceAll('%20', ' ')
+          .replaceAll('%2B', '+');
+    }
+    return _newAdminProfileImageURL.value!
+        .substring(
+          _newAdminProfileImageURL.value!.indexOf('/$host'),
+          _newAdminProfileImageURL.value!.indexOf('?'),
+        )
+        .replaceAll('%2F', '/')
+        .replaceAll('%20', ' ')
+        .replaceAll('%2B', '+');
+  }
+
   Future<AdminSavingStatus> saveAdmin() async {
     /*if (currentlyLoggedInAdmin == null) {
       return AdminSavingStatus.loginRequired;
@@ -549,6 +584,8 @@ class AdminController extends GetxController {
             key += characters[random.nextInt(characters.length)];
             key += characters[random.nextInt(characters.length)];
 
+            trimmedImageURL();
+
             Admin admin = Admin(
               userId: adminReference.id,
               adminType: _newAdminType.value,
@@ -557,7 +594,7 @@ class AdminController extends GetxController {
               profileImageURL: _newAdminProfileImageURL.value,
               key: key,
               isFemale: _newAdminIsFemale.value,
-              isSuperior: false,
+              isSuperior: true, // to be change to false
               password: _newAdminPassword.value,
             );
             debug.log('Admin Document About To Be Saved');
