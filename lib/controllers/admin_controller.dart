@@ -62,7 +62,8 @@ class AdminController extends GetxController {
   // Superior Admin
   Rx<String> _moneyCollectorInfo = Rx(
     // MAKE SURE AN ADMIN WITH THE FOLLOWING CREDENTIALS EXIST, OTHERWISE AN ERROR WILL ARISE.
-    '+27611111111 @Durban Central 8N4M0xigNFKuwsOFBH1UfH1LkV0L',
+    '+27611111111 @Durban Central 9Dv1qmjOG26WuqRA6GvwrrGrmvjD', // emulator
+    // '+27611111111 @Durban Central kdkUOWTPSWhHCdMlvBgZnt4ebTY2',
   );
   String get moneyCollectorInfo => _moneyCollectorInfo.value;
 
@@ -203,6 +204,7 @@ class AdminController extends GetxController {
             '/admins/profile_images/$phoneNumber',
           ),
         );
+        _newAdminProfileImageURL = Rx<String>(trimmedImageURL());
         _newAdminPhoneNumber = Rx<String?>(phoneNumber);
         getSnapbar(
           'Image Status',
@@ -237,6 +239,7 @@ class AdminController extends GetxController {
             '/admins/profile_images/$phoneNumber',
           ),
         );
+        _newAdminProfileImageURL = Rx<String>(trimmedImageURL());
         _newAdminPhoneNumber = Rx<String?>(phoneNumber);
 
         debug.log('Image File Successfully Picked');
@@ -531,9 +534,9 @@ class AdminController extends GetxController {
   }
 
   Future<AdminSavingStatus> saveAdmin() async {
-    /*if (currentlyLoggedInAdmin == null) {
+    if (currentlyLoggedInAdmin == null) {
       return AdminSavingStatus.loginRequired;
-    } */
+    }
 
     if (_newAdminUserId.value == null) {
       return AdminSavingStatus.incompleteData;
@@ -543,7 +546,7 @@ class AdminController extends GetxController {
         .collection('admins')
         .doc(newAdminUserId);
 
-    debug.log('Admin Document Reference Created...');
+    // debug.log('Admin Document Reference Created...');
 
     return adminReference
         .snapshots()
@@ -562,14 +565,14 @@ class AdminController extends GetxController {
           if (_newAdminPhoneNumber.value != null &&
               (!isValidPhoneNumber(_newAdminPhoneNumber.value!) ||
                   newAdminPassword.isEmpty)) {
-            debug.log('Invalid input ${_newAdminPhoneNumber.value!}');
+            // debug.log('Invalid input ${_newAdminPhoneNumber.value!}');
             return AdminSavingStatus.invalidInput;
           }
 
           if (_newAdminProfileImage.value == null ||
               _newAdminProfileImageURL.value.isEmpty ||
               _newAdminPhoneNumber.value == null) {
-            debug.log('Incomplete Data');
+            // debug.log('Incomplete Data');
             return AdminSavingStatus.incompleteData;
           }
 
@@ -584,8 +587,6 @@ class AdminController extends GetxController {
             key += characters[random.nextInt(characters.length)];
             key += characters[random.nextInt(characters.length)];
 
-            trimmedImageURL();
-
             Admin admin = Admin(
               userId: adminReference.id,
               adminType: _newAdminType.value,
@@ -594,17 +595,17 @@ class AdminController extends GetxController {
               profileImageURL: _newAdminProfileImageURL.value,
               key: key,
               isFemale: _newAdminIsFemale.value,
-              isSuperior: true, // to be change to false
+              isSuperior: false,
               password: _newAdminPassword.value,
             );
-            debug.log('Admin Document About To Be Saved');
+            // debug.log('Admin Document About To Be Saved');
             await adminReference.set(admin.toJson());
             loginAdminUsingObject(admin);
             clear();
-            debug.log('Added To Collection...');
+            // debug.log('Added To Collection...');
             return AdminSavingStatus.saved;
           } else {
-            debug.log('Admin Document Already Exist');
+            // debug.log('Admin Document Already Exist');
             return AdminSavingStatus.adminAlreadyExist;
           }
         })

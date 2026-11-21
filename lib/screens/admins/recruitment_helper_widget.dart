@@ -68,28 +68,28 @@ class RecruitmentHelperWidget extends StatelessWidget {
               if (activationRequestStateColor.contains("grey")) {
                 debug.log('Grey Clicked');
                 adminController.updateActivationRequestColorState(
-                  group.groupCreatorPhoneNumber,
+                  group.groupId,
                   group.activationRequest!.activationRequestId,
                   "green",
                 );
               } else if (activationRequestStateColor.contains("yellow")) {
                 debug.log('Yellow Clicked');
                 adminController.updateActivationRequestColorState(
-                  group.groupCreatorPhoneNumber,
+                  group.groupId,
                   group.activationRequest!.activationRequestId,
                   "green",
                 );
               } else if (activationRequestStateColor.contains("green")) {
                 debug.log('Green Clicked');
                 adminController.updateActivationRequestColorState(
-                  group.groupCreatorPhoneNumber,
+                  group.groupId, //groupCreatorPhoneNumber,
                   group.activationRequest!.activationRequestId,
                   "grey",
                 );
               }
 
               adminController.saveRecruitmentHistory(
-                group.groupCreatorPhoneNumber,
+                group.groupId,
                 hasConformedActivationRequest(),
               );
             } else {

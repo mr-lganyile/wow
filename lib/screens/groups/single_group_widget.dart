@@ -397,6 +397,10 @@ class SingleGroupWidgetState extends State<SingleGroupWidget> {
       );
     }
 
+    if (activationRequest.isApproved == null) {
+      return const CircleAvatar(radius: 7, backgroundColor: Colors.grey);
+    }
+
     if (!activationRequest.isApproved!) {
       return const CircleAvatar(radius: 7, backgroundColor: Colors.yellow);
     }

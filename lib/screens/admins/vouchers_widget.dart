@@ -15,6 +15,8 @@ import 'dart:developer' as debug;
 
 import 'activation_info_widget.dart';
 
+// SOMETIMES AN ACTIVATION REQUEST CAN BE SENT AS PART OF A MONEY BAG, ONLY TO FIND THAT IT IS NOT REMOVED FROM THIS WIDGET AFTERWARDS.
+// THE LAST VOUCHER CANNOT BE REMOVED FROM THIS WIDGET, SO MAKE SURE NO SINGLE VOUCHER IS LEFT ON THIS WIDGET.
 class VouchersWidget extends StatelessWidget {
   GroupController groupController = GroupController.instance;
   AdminController adminController = AdminController.adminController;

@@ -45,7 +45,7 @@ class LocationController extends GetxController {
   readAllSupportedTownsOrSuburbsOrInstitutions() {
     Stream<List<SupportedTownOrInstitution>> stream = FirebaseFirestore.instance
         .collection('supported_towns_or_institutions')
-        .orderBy('townOrInstitutionName')
+        // .orderBy('townOrInstitutionName') causes a strange behavior
         .snapshots()
         .map(
           (snapshot) => snapshot.docs.map((doc) {

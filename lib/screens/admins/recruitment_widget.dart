@@ -38,7 +38,7 @@ class RecruitmentWidgetState extends State<RecruitmentWidget> {
           stream: adminController.retrieveMoneyBag(),
           builder: ((context, snapshot) {
             if (snapshot.hasData) {
-              if (snapshot.data == null) {
+              if (snapshot.data == null || !snapshot.data!.exists) {
                 return getCircularProgressBar();
               }
 
