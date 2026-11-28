@@ -52,7 +52,7 @@ class WonPriceCommentWidget extends StatelessWidget {
                       },
                     );
                   } else if (snapshot.hasError) {
-                    debug.log(snapshot.error.toString());
+                    // debug.log(snapshot.error.toString());
                     return getCircularProgressBar();
                   } else {
                     return getCircularProgressBar();
@@ -69,7 +69,7 @@ class WonPriceCommentWidget extends StatelessWidget {
                       color: MyApplication.logoColor2,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      // overflow: TextOverflow.ellipsis
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
 

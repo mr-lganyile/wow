@@ -73,7 +73,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
             }),
           );
         } else if (snapshot.hasError) {
-          debug.log("Error Fetching Data D- ${snapshot.error}");
+          // debug.log("Error Fetching Data D- ${snapshot.error}");
           return getCircularProgressBar();
         } else {
           return getCircularProgressBar();

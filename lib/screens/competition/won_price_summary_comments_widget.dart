@@ -104,7 +104,8 @@ class WonPriceSummaryCommentsWidgets extends StatelessWidget {
                     )),
                   );
                 } else if (snapshot.hasError) {
-                  debug.log('Error: ${snapshot.error.toString()} ');
+                  /*
+                  debug.log('Error: ${snapshot.error.toString()} '); */
                   return getCircularProgressBar();
                 } else {
                   return getCircularProgressBar();

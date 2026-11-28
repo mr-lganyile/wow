@@ -77,12 +77,18 @@ class _StartScreenState extends State<StartScreen>
                   applicationLegalese: 'Lealese',
                   applicationName: 'Wow',
                   applicationVersion: 'version 1.0.0',
-                  children: [Text('Cheers!!!')],
+                  children: [
+                    Text(
+                      "We host games/competitions where people win expensive grand prices for less. "
+                      "These competitions are specific to towns, suburbs and institutions we support. "
+                      "As of yet, we support Durban Central and Mayville only.",
+                    ),
+                  ],
                 ),
               );
             },
           ),
-
+          /*
           ListTile(
             leading: Icon(Icons.admin_panel_settings, size: listTilesIconSize),
             iconColor: MyApplication.logoColor1,
@@ -90,13 +96,14 @@ class _StartScreenState extends State<StartScreen>
             title: Text('Admin', style: TextStyle(fontSize: listTilesFontSize)),
             onTap: () => Get.to(() => AdminEntranceWidget()),
           ),
+          
           ListTile(
             leading: Icon(Icons.group, size: listTilesIconSize),
             iconColor: MyApplication.logoColor1,
             textColor: MyApplication.logoColor2,
             title: Text('Users', style: TextStyle(fontSize: listTilesFontSize)),
             onTap: () => Get.to(() => UsersWidget()),
-          ),
+          ), */
           getCurrentlyLoggenInUser() != null
               ? const SizedBox.shrink()
               : ListTile(

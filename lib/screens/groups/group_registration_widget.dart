@@ -209,7 +209,7 @@ class GroupRegistrationWidget extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              'Alco',
+              'Wow',
               style: TextStyle(
                 fontSize: MyApplication.infoTextFontSize,
                 color: MyApplication.logoColor1,
@@ -306,7 +306,7 @@ class GroupRegistrationWidget extends StatelessWidget {
                     : createGroupButton(context);
               },
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 10),
           ],
         ),
       ),

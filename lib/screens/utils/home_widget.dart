@@ -76,9 +76,10 @@ class _HomeWidgetState extends State<HomeWidget> {
             }),
           );
         } else if (snapshot.hasError) {
+          /*
           debug.log(
             "Error Fetching Won Price Summaries Data *** - ${snapshot.error}",
-          );
+          ); */
           return getCircularProgressBar();
         } else {
           return getCircularProgressBar();

@@ -401,7 +401,7 @@ class CompetitionResultWidget extends StatelessWidget {
             ),
           );
         } else if (snapshot.hasError) {
-          debug.log("Error Fetching Group Members Data - ${snapshot.error}");
+          // debug.log("Error Fetching Group Members Data - ${snapshot.error}");
           return getCircularProgressBar();
         } else {
           return getCircularProgressBar();
@@ -486,6 +486,7 @@ class CompetitionResultWidget extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: MyApplication.logoColor1,
                     decoration: TextDecoration.none,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
               ),
@@ -633,9 +634,10 @@ class CompetitionResultWidget extends StatelessWidget {
                                           },
                                         );
                                       } else if (snapshot.hasError) {
+                                        /*
                                         debug.log(
                                           'Error Fetching Winner Image - ${snapshot.error}',
-                                        );
+                                        ); */
                                         return getCircularProgressBar();
                                       } else {
                                         return getCircularProgressBar();
@@ -678,9 +680,10 @@ class CompetitionResultWidget extends StatelessWidget {
                                     snapshot.data as String,
                                   );
                                 } else if (snapshot.hasError) {
+                                  /*
                                   debug.log(
                                     'Error Fetching Won Price Image - ${snapshot.error}',
-                                  );
+                                  ); */
                                   return getCircularProgressBar();
                                 } else {
                                   return getCircularProgressBar();
@@ -725,9 +728,10 @@ class CompetitionResultWidget extends StatelessWidget {
 
                 return createGroupMembers(context);
               } else if (snapshot.hasError) {
+                /*
                 debug.log(
                   "Error Fetching Group Members Data - ${snapshot.error}",
-                );
+                ); */
                 return getCircularProgressBar();
               } else {
                 return getCircularProgressBar();

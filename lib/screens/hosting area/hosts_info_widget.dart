@@ -11,9 +11,7 @@ import '../../models/hosting areas/host_info.dart';
 
 // Branch : store_resources_crud ->  view_stores_front_end
 class HostsInfoWidget extends StatefulWidget {
-  HostsInfoWidget({
-    super.key,
-  });
+  HostsInfoWidget({super.key});
 
   @override
   HostsInfoWidgetState createState() => HostsInfoWidgetState();
@@ -35,37 +33,39 @@ class HostsInfoWidgetState extends State<HostsInfoWidget> {
 
   @override
   Widget build(BuildContext context) => Container(
-        decoration: BoxDecoration(
-          color: MyApplication.scaffoldColor,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-          ),
-        ),
-        child: Padding(
-          padding: MyApplication.storeDataPadding,
-          child: StreamBuilder<List<HostInfo>>(
-            stream: hostsInfoStream,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                hostsInfo = snapshot.data!;
-                hostsInfo.sort();
+    decoration: BoxDecoration(
+      color: MyApplication.scaffoldColor,
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(30),
+        topRight: Radius.circular(30),
+      ),
+    ),
+    child: Padding(
+      padding: MyApplication.storeDataPadding,
+      child: StreamBuilder<List<HostInfo>>(
+        stream: hostsInfoStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            hostsInfo = snapshot.data!;
+            hostsInfo.sort();
 
-                return ListView.builder(
-                    itemCount: hostsInfo.length,
-                    itemBuilder: ((context, index) {
-                      HostInfo hostInfo = hostsInfo[index];
-                      return HostInfoWidget(hostInfo: hostInfo);
-                    }));
-              } else if (snapshot.hasError) {
+            return ListView.builder(
+              itemCount: hostsInfo.length,
+              itemBuilder: ((context, index) {
+                HostInfo hostInfo = hostsInfo[index];
+                return HostInfoWidget(hostInfo: hostInfo);
+              }),
+            );
+          } else if (snapshot.hasError) {
+            /*
                 debug.log(
-                    "Error Fetching All Host Info Data - ${snapshot.error}");
-                return getCircularProgressBar();
-              } else {
-                return getCircularProgressBar();
-              }
-            },
-          ),
-        ),
-      );
+                    "Error Fetching All Host Info Data - ${snapshot.error}"); */
+            return getCircularProgressBar();
+          } else {
+            return getCircularProgressBar();
+          }
+        },
+      ),
+    ),
+  );
 }

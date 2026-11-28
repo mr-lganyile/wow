@@ -296,6 +296,7 @@ class HostingAreaController extends GetxController {
                   .replaceAll('%2F', '/')
                   .replaceAll('%40', '@')
                   .replaceAll('%3A', ':')
+                  .replaceAll('%20', ' ')
             : _grandPrice1ImageURL.value!;
       case 1:
         start = _grandPrice2ImageURL.value!.indexOf('/o') + 2;
@@ -306,6 +307,7 @@ class HostingAreaController extends GetxController {
                   .replaceAll('%2F', '/')
                   .replaceAll('%40', '@')
                   .replaceAll('%3A', ':')
+                  .replaceAll('%20', ' ')
             : _grandPrice2ImageURL.value!;
       case 2:
         start = _grandPrice3ImageURL.value!.indexOf('/o') + 2;
@@ -316,6 +318,7 @@ class HostingAreaController extends GetxController {
                   .replaceAll('%2F', '/')
                   .replaceAll('%40', '@')
                   .replaceAll('%3A', ':')
+                  .replaceAll('%20', ' ')
             : _grandPrice3ImageURL.value!;
       case 3:
         start = _grandPrice4ImageURL.value!.indexOf('/o') + 2;
@@ -326,6 +329,7 @@ class HostingAreaController extends GetxController {
                   .replaceAll('%2F', '/')
                   .replaceAll('%40', '@')
                   .replaceAll('%3A', ':')
+                  .replaceAll('%20', ' ')
             : _grandPrice4ImageURL.value!;
       default:
         start = _grandPrice5ImageURL.value!.indexOf('/o') + 2;
@@ -336,6 +340,7 @@ class HostingAreaController extends GetxController {
                   .replaceAll('%2F', '/')
                   .replaceAll('%40', '@')
                   .replaceAll('%3A', ':')
+                  .replaceAll('%20', ' ')
             : _grandPrice5ImageURL.value!;
     }
   }
@@ -581,11 +586,11 @@ class HostingAreaController extends GetxController {
   // Supposed To Be A Backend Function.
   bool hasAcceptableAdminCredentials() {
     return _adminCode.value != null &&
-        (_adminCode.value!.compareTo('$drawKeyPart@NUZ') == 0 ||
-            // _adminCode.value!.compareTo('$drawKeyPart@MUT') == 0 ||
-            // _adminCode.value!.compareTo('$drawKeyPart@DUT') == 0 ||
-            _adminCode.value!.compareTo('$drawKeyPart@UKZN') == 0 ||
-            // _adminCode.value!.compareTo('$drawKeyPart@MAYV') == 0 ||
+        ( // _adminCode.value!.compareTo('$drawKeyPart@NUZ') == 0 ||
+        // _adminCode.value!.compareTo('$drawKeyPart@MUT') == 0 ||
+        // _adminCode.value!.compareTo('$drawKeyPart@DUT') == 0 ||
+        // _adminCode.value!.compareTo('$drawKeyPart@UKZN') == 0 ||
+        _adminCode.value!.compareTo('$drawKeyPart@MAYV') == 0 ||
             // _adminCode.value!.compareTo('$drawKeyPart@SYD') == 0 ||
             _adminCode.value!.compareTo('$drawKeyPart@DBNC') ==
                 0 //||
@@ -666,12 +671,12 @@ class HostingAreaController extends GetxController {
 
   // Supposed To Be A Backend Function.
   Future<HostedDrawSavingStatus> createHostedDraw() async {
-    if (_adminCode.value!.compareTo('$drawKeyPart@NUZ') != 0 &&
-        // _adminCode.value!.compareTo('$drawKeyPart@MUT') != 0 &&
-        // _adminCode.value!.compareTo('$drawKeyPart@DUT') != 0 &&
-        // _adminCode.value!.compareTo('$drawKeyPart@MAYV') != 0 &&
-        // _adminCode.value!.compareTo('$drawKeyPart@SYD') != 0 &&
-        _adminCode.value!.compareTo('$drawKeyPart@UKZN') != 0 &&
+    if ( // _adminCode.value!.compareTo('$drawKeyPart@NUZ') != 0 &&
+    // _adminCode.value!.compareTo('$drawKeyPart@MUT') != 0 &&
+    // _adminCode.value!.compareTo('$drawKeyPart@DUT') != 0 &&
+    // _adminCode.value!.compareTo('$drawKeyPart@MAYV') != 0 &&
+    // _adminCode.value!.compareTo('$drawKeyPart@SYD') != 0 &&
+    _adminCode.value!.compareTo('$drawKeyPart@UKZN') != 0 &&
         _adminCode.value!.compareTo('$drawKeyPart@DBNC') !=
             0 // &&
     // _adminCode.value!.compareTo('$drawKeyPart@NANDA') != 0

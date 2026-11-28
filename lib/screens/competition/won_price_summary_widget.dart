@@ -432,9 +432,10 @@ class WonPriceSummaryWidgetState extends State<WonPriceSummaryWidget> {
             ),
           );
         } else if (snapshot.hasError) {
+          /*
           debug.log(
             "Error Fetching Group Participants Data - ${snapshot.error}",
-          );
+          ); */
           return getCircularProgressBar();
         } else {
           return getCircularProgressBar();
@@ -576,9 +577,10 @@ class WonPriceSummaryWidgetState extends State<WonPriceSummaryWidget> {
                                           },
                                         );
                                       } else if (snapshot.hasError) {
+                                        /*
                                         debug.log(
                                           'Error Fetching Winner Image - ${snapshot.error}',
-                                        );
+                                        ); */
                                         return getCircularProgressBar();
                                       } else {
                                         return getCircularProgressBar();
@@ -621,9 +623,10 @@ class WonPriceSummaryWidgetState extends State<WonPriceSummaryWidget> {
                                     snapshot.data as String,
                                   );
                                 } else if (snapshot.hasError) {
+                                  /*
                                   debug.log(
                                     'Error Fetching Won Price Image - ${snapshot.error}',
-                                  );
+                                  ); */
                                   return getCircularProgressBar();
                                 } else {
                                   return getCircularProgressBar();
@@ -654,9 +657,10 @@ class WonPriceSummaryWidgetState extends State<WonPriceSummaryWidget> {
 
                 return createGroupMembers(context);
               } else if (snapshot.hasError) {
+                /*
                 debug.log(
                   "Error Fetching Group Members Data - ${snapshot.error}",
-                );
+                ); */
                 return getCircularProgressBar();
               } else {
                 return getCircularProgressBar();

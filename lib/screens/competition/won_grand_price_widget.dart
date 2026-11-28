@@ -12,9 +12,7 @@ import '../utils/globals.dart';
 class WonGrandPriceWidget extends StatelessWidget {
   DrawGrandPrice wonPrice;
 
-  WonGrandPriceWidget({
-    required this.wonPrice,
-  });
+  WonGrandPriceWidget({required this.wonPrice});
 
   Future<String> findWonPriceImageURL() async {
     return reference.child(wonPrice.imageURL).getDownloadURL();
@@ -73,26 +71,29 @@ class WonGrandPriceWidget extends StatelessWidget {
     return Column(
       children: [
         FutureBuilder(
-            future: findWonPriceImageURL(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return retrieveWonPriceImage(context, snapshot.data as String);
-              } else if (snapshot.hasError) {
+          future: findWonPriceImageURL(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return retrieveWonPriceImage(context, snapshot.data as String);
+            } else if (snapshot.hasError) {
+              /*
                 debug.log(
-                    'Error Fetching Won Grand Price Image - ${snapshot.error}');
-                return getCircularProgressBar();
-              } else {
-                return getCircularProgressBar();
-              }
-            }),
+                    'Error Fetching Won Grand Price Image - ${snapshot.error}'); */
+              return getCircularProgressBar();
+            } else {
+              return getCircularProgressBar();
+            }
+          },
+        ),
         Text(
           wonPrice.description,
           style: TextStyle(
-              fontSize: MyApplication.infoTextFontSize,
-              fontWeight: FontWeight.bold,
-              color: MyApplication.logoColor1,
-              decoration: TextDecoration.none),
-        )
+            fontSize: MyApplication.infoTextFontSize,
+            fontWeight: FontWeight.bold,
+            color: MyApplication.logoColor1,
+            decoration: TextDecoration.none,
+          ),
+        ),
       ],
     );
   }

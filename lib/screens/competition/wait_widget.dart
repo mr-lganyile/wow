@@ -183,9 +183,10 @@ class WaitWidgetState extends State<WaitWidget> {
           ],
         );
       } else if (snapshot.hasError) {
+        /*
         debug.log(
           'Error Fetching All Draw Grand Prices Data - ${snapshot.error}',
-        );
+        ); */
         return getCircularProgressBar();
       } else {
         return getCircularProgressBar();

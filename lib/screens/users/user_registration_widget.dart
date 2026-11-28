@@ -244,9 +244,10 @@ class UserRegistrationState extends State<UserRegistrationWidget> {
                         },
                       );
                     } else if (snapshot.hasError) {
+                      /*
                       debug.log(
                         "Error Fetching Supported Areas Data - ${snapshot.error}",
-                      );
+                      ); */
                       return getCircularProgressBar();
                     } else {
                       return getCircularProgressBar();
@@ -409,99 +410,109 @@ class UserRegistrationState extends State<UserRegistrationWidget> {
 
                 GetBuilder<shared.SharedResourcesController>(
                   builder: (_) {
-                    return /*sharedResourcesController.showSigninProgressBar
+                    return sharedResourcesController.showSigninProgressBar
                         ? Center(
                             child: CircularProgressIndicator(
                               color: MyApplication.logoColor2,
                             ),
                           )
-                        : */ Column(
-                      children: [
-                        // Sign Up User
-                        Container(
-                          // width: MediaQuery.of(context).size.width, causes keyboard glitches
-                          width: MediaQuery.sizeOf(context).width,
-                          height: 60,
-                          margin: const EdgeInsets.symmetric(horizontal: 5),
-                          decoration: BoxDecoration(
-                            color: MyApplication.logoColor1,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                          child: InkWell(
-                            onTap: () async {
-                              debug.log('clicked...');
-                              if (getCurrentlyLoggenInUser() != null) {
-                                getSnapbar(
-                                  "Signing Error",
-                                  "Logout Before Registering New Users.",
-                                );
-                                return;
-                              }
+                        : Column(
+                            children: [
+                              // Sign Up User
+                              Container(
+                                // width: MediaQuery.of(context).size.width, causes keyboard glitches
+                                width: MediaQuery.sizeOf(context).width,
+                                height: 60,
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 5,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: MyApplication.logoColor1,
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                ),
+                                child: InkWell(
+                                  onTap: () async {
+                                    debug.log('clicked...');
+                                    if (getCurrentlyLoggenInUser() != null) {
+                                      getSnapbar(
+                                        "Signing Error",
+                                        "Logout Before Registering New Users.",
+                                      );
+                                      return;
+                                    }
 
-                              debug.log(
-                                'User Validation From UserRegistrationScreen 1',
-                              );
+                                    debug.log(
+                                      'User Validation From UserRegistrationScreen 1',
+                                    );
 
-                              if (phoneNumberEditingController.text.isEmpty) {
-                                getSnapbar(
-                                  "Error",
-                                  "Ensure A Phone Number Is Entered.",
-                                );
-                              } else if (phoneNumberEditingController
-                                      .text
-                                      .length !=
-                                  9) {
-                                getSnapbar(
-                                  "Error",
-                                  "Ensure A 10 Digit Phone Number Is Entered.",
-                                );
-                              } else if (usernameEditingController
-                                  .text
-                                  .isEmpty) {
-                                getSnapbar(
-                                  "Error",
-                                  "Ensure A Username Is Entered.",
-                                );
-                              } else if (passwordEditingController
-                                  .text
-                                  .isEmpty) {
-                                getSnapbar(
-                                  "Error",
-                                  "Ensure A Password Is Entered.",
-                                );
-                              } else if (userController
-                                  .newUserImageURL!
-                                  .isEmpty) {
-                                getSnapbar(
-                                  "Error",
-                                  "Ensure Your Image Is Picked/Captured.",
-                                );
-                              }
-                              // Create User Now
-                              else {
-                                userController.setNewUserUsername(
-                                  usernameEditingController.text,
-                                );
+                                    if (phoneNumberEditingController
+                                        .text
+                                        .isEmpty) {
+                                      getSnapbar(
+                                        "Error",
+                                        "Ensure A Phone Number Is Entered.",
+                                      );
+                                    } else if (phoneNumberEditingController
+                                            .text
+                                            .length !=
+                                        9) {
+                                      getSnapbar(
+                                        "Error",
+                                        "Ensure A 10 Digit Phone Number Is Entered.",
+                                      );
+                                    } else if (usernameEditingController
+                                        .text
+                                        .isEmpty) {
+                                      getSnapbar(
+                                        "Error",
+                                        "Ensure A Username Is Entered.",
+                                      );
+                                    } else if (passwordEditingController
+                                        .text
+                                        .isEmpty) {
+                                      getSnapbar(
+                                        "Error",
+                                        "Ensure A Password Is Entered.",
+                                      );
+                                    } else if (userController
+                                        .newUserImageURL!
+                                        .isEmpty) {
+                                      getSnapbar(
+                                        "Error",
+                                        "Ensure Your Image Is Picked/Captured.",
+                                      );
+                                    }
+                                    // Create User Now
+                                    else {
+                                      sharedResourcesController
+                                          .setShowSigninProgressBar(true);
 
-                                userController.setNewUserPassword(
-                                  passwordEditingController.text,
-                                );
+                                      userController.setNewUserUsername(
+                                        usernameEditingController.text,
+                                      );
 
-                                sharedResourcesController
-                                    .setShowSigninProgressBar(true);
-                                debug.log(
-                                  'User Validated From UserRegistrationScreen 2',
-                                );
+                                      userController.setNewUserPassword(
+                                        passwordEditingController.text,
+                                      );
 
-                                await auth.verifyPhoneNumber(
-                                  phoneNumber:
-                                      '+27${phoneNumberEditingController.text}',
-                                  verificationCompleted:
-                                      (PhoneAuthCredential credential) async {
-                                        debug.log('PhoneAuthCredential...');
-                                        /*
+                                      /*
+                                      debug.log(
+                                        'User Validated From UserRegistrationScreen 2',
+                                      );*/
+
+                                      await auth.verifyPhoneNumber(
+                                        phoneNumber:
+                                            '+27${phoneNumberEditingController.text}',
+                                        verificationCompleted:
+                                            (
+                                              PhoneAuthCredential credential,
+                                            ) async {
+                                              debug.log(
+                                                'PhoneAuthCredential...',
+                                              );
+                                              /*
                                     debug.log(
                                         '1. About To Signed In User From UserRegistrationScreen...');
                                     // ANDROID ONLY!
@@ -539,113 +550,119 @@ class UserRegistrationState extends State<UserRegistrationWidget> {
                                       }
                                     });
                                     */
-                                      },
-                                  verificationFailed: (FirebaseAuthException e) {
-                                    if (e.code == 'invalid-phone-number') {
-                                      Get.back();
-                                      getSnapbar(
-                                        'Error',
-                                        'Invalid Number Entered, Try Again.',
-                                      );
-                                    } else if (e.code ==
-                                        'missing-phone-number') {
-                                      Get.back();
-                                      getSnapbar(
-                                        'Error',
-                                        'The request was triggered but no phone number string was passed to the function.',
-                                      );
-                                    } else if (e.code ==
-                                        'missing-verification-code') {
-                                      Get.back();
-                                      getSnapbar(
-                                        'Error',
-                                        'The PhoneAuthCredential was created with an empty SMS code.',
-                                      );
-                                    } else if (e.code == 'quota-exceeded') {
-                                      Get.back();
-                                      getSnapbar(
-                                        'Error',
-                                        'The SMS quota for your project or IP address has been temporarily exceeded',
-                                      );
-                                    } else if (e.code == 'too-many-requests') {
-                                      Get.back();
-                                      getSnapbar(
-                                        'Error',
-                                        'Too many requests have been made from this phone number',
-                                      );
-                                    } else {
-                                      Get.back();
-                                      getSnapbar('Error', 'Try Again.');
-                                    }
+                                            },
+                                        verificationFailed: (FirebaseAuthException e) {
+                                          if (e.code ==
+                                              'invalid-phone-number') {
+                                            Get.back();
+                                            getSnapbar(
+                                              'Error',
+                                              'Invalid Number Entered, Try Again.',
+                                            );
+                                          } else if (e.code ==
+                                              'missing-phone-number') {
+                                            Get.back();
+                                            getSnapbar(
+                                              'Error',
+                                              'The request was triggered but no phone number string was passed to the function.',
+                                            );
+                                          } else if (e.code ==
+                                              'missing-verification-code') {
+                                            Get.back();
+                                            getSnapbar(
+                                              'Error',
+                                              'The PhoneAuthCredential was created with an empty SMS code.',
+                                            );
+                                          } else if (e.code ==
+                                              'quota-exceeded') {
+                                            Get.back();
+                                            getSnapbar(
+                                              'Error',
+                                              'The SMS quota for your project or IP address has been temporarily exceeded',
+                                            );
+                                          } else if (e.code ==
+                                              'too-many-requests') {
+                                            Get.back();
+                                            getSnapbar(
+                                              'Error',
+                                              'Too many requests have been made from this phone number',
+                                            );
+                                          } else {
+                                            Get.back();
+                                            getSnapbar('Error', 'Try Again.');
+                                          }
 
-                                    // Handle other errors
+                                          // Handle other errors
+                                        },
+                                        codeSent:
+                                            (
+                                              String verificationId,
+                                              int? resendToken,
+                                            ) async {
+                                              debug.log(
+                                                '....About To VerificationScreen',
+                                              );
+                                              Get.to(
+                                                () => VerificationScreen(
+                                                  phoneNumber:
+                                                      '$countryDialCode${phoneNumberEditingController.text}',
+                                                  verificationId:
+                                                      verificationId,
+                                                  forAdmin: false,
+                                                  forLogin: false,
+                                                ),
+                                              );
+                                            },
+                                        codeAutoRetrievalTimeout:
+                                            (String verificationId) {},
+                                      );
+                                    }
                                   },
-                                  codeSent:
-                                      (
-                                        String verificationId,
-                                        int? resendToken,
-                                      ) async {
-                                        debug.log(
-                                          '....About To VerificationScreen',
-                                        );
-                                        Get.to(
-                                          () => VerificationScreen(
-                                            phoneNumber:
-                                                '$countryDialCode${phoneNumberEditingController.text}',
-                                            verificationId: verificationId,
-                                            forAdmin: false,
-                                            forLogin: false,
-                                          ),
-                                        );
-                                      },
-                                  codeAutoRetrievalTimeout:
-                                      (String verificationId) {},
-                                );
-                              }
-                            },
-                            child: const Center(
-                              child: Text(
-                                'Sign Up',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
+                                  child: const Center(
+                                    child: Text(
+                                      'Sign Up',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Already have an account?",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: MyApplication.logoColor1,
+                              const SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Already have an account?",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: MyApplication.logoColor1,
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      // Send User To Login Screen.
+                                      userController
+                                          .logoutUser(); // Logout currently logged in user.
+                                      Get.to(
+                                        () => LoginWidget(forAdmin: false),
+                                      );
+                                    },
+                                    child: Text(
+                                      " Login",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: MyApplication.logoColor2,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                // Send User To Login Screen.
-                                userController
-                                    .logoutUser(); // Logout currently logged in user.
-                                Get.to(() => LoginWidget(forAdmin: false));
-                              },
-                              child: Text(
-                                " Login",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: MyApplication.logoColor2,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    );
+                            ],
+                          );
                   },
                 ),
               ],

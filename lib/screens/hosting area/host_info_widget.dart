@@ -100,12 +100,12 @@ class HostInfoWidgetState extends State<HostInfoWidget> {
     this.currentGroupCompetitorWidget = currentGroupCompetitorWidget;
   }
 
-  Column retrieveStoreDetails(BuildContext context) {
-    // Information About The Hosting Store.
+  Column retrieveAreaDetails(BuildContext context) {
+    // Information About The Hosting Area.
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // The Name Of A Store On Which The Winner Won From.
+        // The Name Of Area On Which The Winner Won From.
         Row(
           children: [
             Expanded(
@@ -117,6 +117,7 @@ class HostInfoWidgetState extends State<HostInfoWidget> {
                   color: MyApplication.storesTextColor,
                   fontWeight: FontWeight.bold,
                   decoration: TextDecoration.none,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
@@ -136,7 +137,7 @@ class HostInfoWidgetState extends State<HostInfoWidget> {
           ],
         ),
 
-        // The Address Of A Store On Which The Winner Won From.
+        // The Address Of A Area On Which The Winner Won From.
         Row(
           children: [
             Expanded(
@@ -148,6 +149,7 @@ class HostInfoWidgetState extends State<HostInfoWidget> {
                   fontWeight: FontWeight.bold,
                   color: MyApplication.storesTextColor,
                   decoration: TextDecoration.none,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
@@ -174,11 +176,11 @@ class HostInfoWidgetState extends State<HostInfoWidget> {
     return reference.child(hostingAreaImageURL).getDownloadURL();
   }
 
-  AspectRatio retrieveStoreImage(
+  AspectRatio retrieveAreaImage(
     BuildContext context,
     String hostingAreaImageURL,
   ) {
-    // The Image Of A Store On Which The Winner Won From.
+    // The Image Of A Area On Which The Winner Won From.
     return AspectRatio(
       aspectRatio: 5 / 2,
       /*child: Container(
@@ -220,7 +222,7 @@ class HostInfoWidgetState extends State<HostInfoWidget> {
     return SizedBox(
       child: Column(
         children: [
-          // Store Image
+          // Area Image
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: FutureBuilder(
@@ -229,11 +231,12 @@ class HostInfoWidgetState extends State<HostInfoWidget> {
               ),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return retrieveStoreImage(context, snapshot.data as String);
+                  return retrieveAreaImage(context, snapshot.data as String);
                 } else if (snapshot.hasError) {
+                  /*
                   debug.log(
                     'Error Fetching Hosting Area Image - ${snapshot.error}',
-                  );
+                  ); */
                   return getCircularProgressBar();
                 } else {
                   return getCircularProgressBar();
@@ -241,15 +244,15 @@ class HostInfoWidgetState extends State<HostInfoWidget> {
               },
             ),
           ),
-          // Store Details
-          retrieveStoreDetails(context),
-          myStoreState(),
+          // Area Details
+          retrieveAreaDetails(context),
+          myAreaState(),
         ],
       ),
     );
   }
 
-  Widget myStoreState() {
+  Widget myAreaState() {
     return Container(
       margin: const EdgeInsets.only(bottom: 5),
       child: StreamBuilder<DocumentSnapshot?>(
@@ -298,9 +301,10 @@ class HostInfoWidgetState extends State<HostInfoWidget> {
 
                     return readFromcountDownClock(collectionId, nextHostedDraw);
                   } else if (snapshot.hasError) {
+                    /*
                     debug.log(
                       "Error Fetching competition Data - ${snapshot.error}",
-                    );
+                    ); */
                     return getCircularProgressBar();
                   } else {
                     return getCircularProgressBar();
@@ -309,9 +313,10 @@ class HostInfoWidgetState extends State<HostInfoWidget> {
               );
             }
           } else if (snapshot.hasError) {
+            /*
             debug.log(
               "Error Fetching Last Hosted Draw Data - ${snapshot.error}",
-            );
+            ); */
             return NoCompetitionWidget(
               hostingAreaId: widget.hostInfo.hostInfoId,
               hostingAreaName: widget.hostInfo.hostingAreaName,
@@ -395,7 +400,7 @@ class HostInfoWidgetState extends State<HostInfoWidget> {
           // Show and pick grand prices.
           else if (widget.hostInfo.isCurrentlyViewed &&
               countDownClock.remainingTime < grandPricePickingDuration) {
-            debug.log('Grand Price Picking: ${countDownClock.remainingTime}');
+            // debug.log('Grand Price Picking: ${countDownClock.remainingTime}');
             return WaitWidget(
               remainingDuration: Duration(
                 seconds: countDownClock.remainingTime,
@@ -445,10 +450,10 @@ class HostInfoWidgetState extends State<HostInfoWidget> {
             if (widget.hostInfo.isCurrentlyViewed) {
               widget.hostInfo.setIsCurrentlyViewed(false);
             }
-
+            /*
             debug.log(
               'Show won price summary: ${countDownClock.remainingTime} competition.wonGroup ${competition.wonGroup == null}',
-            );
+            ); */
             return CompetitionResultWidget(
               wonPrice: competition.wonPrice!,
               wonGroup: competition.wonGroup!,
@@ -465,7 +470,7 @@ class HostInfoWidgetState extends State<HostInfoWidget> {
               !hasUpdatedNextDraw) {
             hasUpdatedNextDraw = true;
             hostingAreaController.updateDrawsOrder(widget.hostInfo.hostInfoId);
-            debug.log('updateDrawsOrder');
+            // debug.log('updateDrawsOrder');
             return CompetitionFinishedWidget(endMoment: competitionEndTime);
           }
           // pickingMultipleInSeconds * 12 // Game Over
@@ -477,12 +482,12 @@ class HostInfoWidgetState extends State<HostInfoWidget> {
                 !competition.isOver) {
               competitionReference.update({"isOver": true});
             }*/
-            debug.log('Display Competition Finished');
+            // debug.log('Display Competition Finished');
             return CompetitionFinishedWidget(endMoment: competitionEndTime);
             // return displayGroupCompetitors();
           }
         } else if (snapshot.hasError) {
-          debug.log('Error fetching count down clock data ${snapshot.error}');
+          // debug.log('Error fetching count down clock data ${snapshot.error}');
           return getCircularProgressBar();
         } else {
           return getCircularProgressBar();

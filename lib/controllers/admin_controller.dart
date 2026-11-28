@@ -62,8 +62,8 @@ class AdminController extends GetxController {
   // Superior Admin
   Rx<String> _moneyCollectorInfo = Rx(
     // MAKE SURE AN ADMIN WITH THE FOLLOWING CREDENTIALS EXIST, OTHERWISE AN ERROR WILL ARISE.
-    '+27611111111 @Durban Central 9Dv1qmjOG26WuqRA6GvwrrGrmvjD', // emulator
-    // '+27611111111 @Durban Central kdkUOWTPSWhHCdMlvBgZnt4ebTY2',
+    // '+27611111111 @Durban Central 9Dv1qmjOG26WuqRA6GvwrrGrmvjD', // emulator
+    '+27611111111 @Durban Central kdkUOWTPSWhHCdMlvBgZnt4ebTY2',
   );
   String get moneyCollectorInfo => _moneyCollectorInfo.value;
 

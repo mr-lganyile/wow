@@ -60,6 +60,7 @@ class SingleGroupWidgetState extends State<SingleGroupWidget> {
                   fontWeight: FontWeight.bold,
                   color: MyApplication.storesTextColor,
                   decoration: TextDecoration.none,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
@@ -262,9 +263,10 @@ class SingleGroupWidgetState extends State<SingleGroupWidget> {
             ),
           );
         } else if (snapshot.hasError) {
+          /*
           debug.log(
             "Error Fetching Group Participant Data - ${snapshot.error}",
-          );
+          ); */
           return getCircularProgressBar();
         } else {
           return getCircularProgressBar();
@@ -352,7 +354,7 @@ class SingleGroupWidgetState extends State<SingleGroupWidget> {
         children: [
           // Group Name [Phone Number]
           Text(
-            '${widget.competitorsGroup.groupName}',
+            widget.competitorsGroup.groupName,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -537,9 +539,10 @@ class SingleGroupWidgetState extends State<SingleGroupWidget> {
 
                                   return retrieveGroupImage(context, data);
                                 } else if (snapshot.hasError) {
+                                  /*
                                   debug.log(
                                     "Error Fetching Group Image Data - ${snapshot.error}",
-                                  );
+                                  ); */
                                   return getCircularProgressBar();
                                 } else {
                                   return getCircularProgressBar();
@@ -583,9 +586,10 @@ class SingleGroupWidgetState extends State<SingleGroupWidget> {
 
                 return createGroupMembers(context);
               } else if (snapshot.hasError) {
+                /*
                 debug.log(
                   "Error Fetching Group Members Data - ${snapshot.error}",
-                );
+                ); */
                 return getCircularProgressBar();
               } else {
                 return getCircularProgressBar();

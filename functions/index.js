@@ -69,7 +69,7 @@ const fakeUsers = new FakeUsers();
 // http://127.0.0.1:5001/wow-we-won/africa-south1/saveHostingAreas
 // http://127.0.0.1:5001/wow-we-won/africa-south1/saveFakeAdmins
 // http://127.0.0.1:5001/wow-we-won/africa-south1/createFakeGroups?hostIndex=1
-// http://127.0.0.1:5001/wow-we-won/africa-south1/createFakeDraws?hostIndex=7
+// http://127.0.0.1:5001/wow-we-won/africa-south1/createMayvilleDraw?minute=20&hour=13&date=28&month=11&year=2026
 // http://127.0.0.1:5001/wow-we-won/africa-south1/convertToCompetitions
 // http://127.0.0.1:5001/wow-we-won/africa-south1/createFakeActivationRequests
 
@@ -1545,18 +1545,24 @@ export const createFakeGroups = onRequest(
 
 // http://127.0.0.1:5001/wow-we-won/africa-south1/createFakeDraws
 // Stop using this function because it HostedDraw objects do not have wonGroupId property.
-export const createFakeDraws = onRequest(
+export const createMayvilleDraw = onRequest(
     {
         region: "africa-south1"
     },
     async (req, res) => {
-        const drawDateAndTime = new Date();
-        const year = drawDateAndTime.getFullYear();
-        const month = drawDateAndTime.getMonth() + 1;
-        const date = drawDateAndTime.getDate();
-        const hour = drawDateAndTime.getHours() + 2;
+        // const drawDateAndTime = new Date();
+        //const year = drawDateAndTime.getFullYear() + 2;
+        const year = parseInt(req.query.year);
+        // const month = drawDateAndTime.getMonth() + 1;
+        const month = parseInt(req.query.month);
+        // const date = drawDateAndTime.getDate();
+        const date = parseInt(req.query.date);
+        // const hour = drawDateAndTime.getHours() + 2;
+        const hour = parseInt(req.query.hour);
+        // const minute = drawDateAndTime.getMinutes() + 4;
+        const minute = parseInt(req.query.minute);
+        // GRAND PRICE ID EXAMPLE 22-12-2026@1:35-1
 
-        const minute = drawDateAndTime.getMinutes() + 4;
 
 
         let reference;
@@ -1571,30 +1577,19 @@ export const createFakeDraws = onRequest(
         // listAllUsers();
         log('Reached One...')
 
-        switch (parseInt(req.query.hostIndex)) {
+        switch (1/*parseInt(req.query.hostIndex)*/) {
 
 
-            case 1: // Durban Central
-                hostingAreaFK = "g4drbsfkrnds48dnmd";
-                hostingAreaName = "Durban Central";
+            case 1: // Mayville
+                hostingAreaFK = "e4drbsfkrnds48dnmd";
+                hostingAreaName = "Mayville";
                 townOrInstitution = {
                     cityFK: "1",
-                    townOrInstitutionName: "Durban Central",
-                    townOrInstitutionNo: "7",
+                    townOrInstitutionName: "Mayville",
+                    townOrInstitutionNo: "5",
                 };
-                groupToWinPhoneNumber = "+27630000000";
-                groupToWinId = "dbn-central-fake-group-4";
-                break;
-            case 2: // UKZN
-                hostingAreaFK = "d4drbsfkrnds48dnmd";
-                hostingAreaName = "Howard College (UKZN)";
-                townOrInstitution = {
-                    cityFK: "1",
-                    townOrInstitutionName: "Howard College UKZN",
-                    townOrInstitutionNo: "4",
-                };
-                groupToWinPhoneNumber = "+27803333333";
-                groupToWinId = "ukzn-fake-group-3";
+                groupToWinPhoneNumber = "N/A";
+                groupToWinId = "N/A";
                 break;
         }
 
@@ -1638,48 +1633,26 @@ export const createFakeDraws = onRequest(
             reference = getFirestore().collection("hosting_areas")
                 .doc(hostingAreaFK).collection("hosted_draws")
                 .doc(hostedDrawId).collection("draw_grand_prices")
-                // .doc(`${hostedDrawId}-${priceIndex}`);
-                .doc(`${priceIndex}`);
+                .doc(`${date}-${month}-${year}@${hour}h${minute}-${priceIndex}`);
 
             let description;
 
-            if (parseInt(req.query.hostIndex) == 1) {
-                switch (priceIndex) {
-                    case 0:
-                        description = "";
-                        break;
-                    case 1:
-                        description = "";
-                        break;
-                    case 2:
-                        description = "";
-                        break;
-                    case 3:
-                        description = "";
-                        break;
-                    default:
-                        description = "";
-                }
-            }
-
-            // Dubran Central
-            else if (parseInt(req.query.hostIndex) == 2) {
-                switch (priceIndex) {
-                    case 0:
-                        description = "";
-                        break;
-                    case 1:
-                        description = "";
-                        break;
-                    case 2:
-                        description = "";
-                        break;
-                    case 3:
-                        description = "";
-                        break;
-                    default:
-                        description = "";
-                }
+            // Mayville
+            switch (priceIndex) {
+                case 0:
+                    description = "";
+                    break;
+                case 1:
+                    description = "";
+                    break;
+                case 2:
+                    description = "";
+                    break;
+                case 3:
+                    description = "";
+                    break;
+                default:
+                    description = "";
             }
 
             grandPrice = {

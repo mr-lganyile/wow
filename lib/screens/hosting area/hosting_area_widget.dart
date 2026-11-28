@@ -28,11 +28,11 @@ class HostingAreaWidget extends StatefulWidget {
   });
 
   Column retrieveHostingAreaDetails(BuildContext context) {
-    // Information About The Hosting Store.
+    // Information About The Hosting area.
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // The Name Of A Store On Which The Winner Won From.
+        // The Name Of An area On Which The Winner Won From.
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -40,10 +40,12 @@ class HostingAreaWidget extends StatefulWidget {
               child: Text(
                 'Host Area Name',
                 style: TextStyle(
-                    fontSize: MyApplication.infoTextFontSize,
-                    color: MyApplication.storeInfoTextColor,
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.none),
+                  fontSize: MyApplication.infoTextFontSize,
+                  color: MyApplication.storeInfoTextColor,
+                  fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.none,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
             Expanded(
@@ -72,10 +74,11 @@ class HostingAreaWidget extends StatefulWidget {
               child: Text(
                 'Host Home',
                 style: TextStyle(
-                    fontSize: MyApplication.infoTextFontSize,
-                    fontWeight: FontWeight.bold,
-                    color: MyApplication.storeInfoTextColor,
-                    decoration: TextDecoration.none),
+                  fontSize: MyApplication.infoTextFontSize,
+                  fontWeight: FontWeight.bold,
+                  color: MyApplication.storeInfoTextColor,
+                  decoration: TextDecoration.none,
+                ),
               ),
             ),
             Expanded(
@@ -84,11 +87,12 @@ class HostingAreaWidget extends StatefulWidget {
                 child: Text(
                   Converter.asString(sectionName),
                   style: TextStyle(
-                      fontSize: MyApplication.infoTextFontSize,
-                      fontWeight: FontWeight.bold,
-                      color: MyApplication.storeInfoTextColor,
-                      decoration: TextDecoration.none,
-                      overflow: TextOverflow.ellipsis),
+                    fontSize: MyApplication.infoTextFontSize,
+                    fontWeight: FontWeight.bold,
+                    color: MyApplication.storeInfoTextColor,
+                    decoration: TextDecoration.none,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
             ),
@@ -99,7 +103,9 @@ class HostingAreaWidget extends StatefulWidget {
   }
 
   AspectRatio retrieveHostingAreaImage(
-      BuildContext context, String storeImage) {
+    BuildContext context,
+    String storeImage,
+  ) {
     debug.log('host info widget retrieveHostingAreaImage...');
     // The Image Of A Store On Which The Winner Won From.
     return AspectRatio(
@@ -154,8 +160,9 @@ class HostingAreaWidgetState extends State<HostingAreaWidget> {
   @override
   void initState() {
     super.initState();
-    hostedDraws = hostingAreaController.findHostedDraws(widget.hostingAreaId)
-        as List<HostedDraw>;
+    hostedDraws =
+        hostingAreaController.findHostedDraws(widget.hostingAreaId)
+            as List<HostedDraw>;
   }
 
   int findSpecialDateIndex() {
@@ -174,27 +181,32 @@ class HostingAreaWidgetState extends State<HostingAreaWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: widget.createHostingAreaImageURL(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Column(
-              children: [
-                SizedBox(
-                    height: 150,
-                    child: widget.retrieveHostingAreaImage(
-                        context, snapshot.data as String)),
-                SizedBox(
-                  height: 50,
-                  child: widget.retrieveHostingAreaDetails(context),
+      future: widget.createHostingAreaImageURL(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Column(
+            children: [
+              SizedBox(
+                height: 150,
+                child: widget.retrieveHostingAreaImage(
+                  context,
+                  snapshot.data as String,
                 ),
-              ],
-            );
-          } else if (snapshot.hasError) {
-            debug.log('Error Fetching Hosting Area Image - ${snapshot.error}');
-            return getCircularProgressBar();
-          } else {
-            return getCircularProgressBar();
-          }
-        });
+              ),
+              SizedBox(
+                height: 50,
+                child: widget.retrieveHostingAreaDetails(context),
+              ),
+            ],
+          );
+        } else if (snapshot.hasError) {
+          /*
+            debug.log('Error Fetching Hosting Area Image - ${snapshot.error}'); */
+          return getCircularProgressBar();
+        } else {
+          return getCircularProgressBar();
+        }
+      },
+    );
   }
 }

@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 // Branch : won_price_summary_resources_crud -> view_won_price_summaries
 class CompetitionFinishedWidget extends StatefulWidget {
   DateTime endMoment;
-  CompetitionFinishedWidget({
-    super.key,
-    required this.endMoment,
-  });
+  CompetitionFinishedWidget({super.key, required this.endMoment});
 
   @override
   State createState() => CompetitionFinishedWidgetState();
@@ -15,10 +12,10 @@ class CompetitionFinishedWidget extends StatefulWidget {
 class CompetitionFinishedWidgetState extends State<CompetitionFinishedWidget> {
   @override
   Widget build(BuildContext context) {
-    String fullEndDateTime = widget.endMoment
-        .toLocal()
-        .toString()
-        .substring(0, widget.endMoment.toLocal().toString().length - 4);
+    String fullEndDateTime = widget.endMoment.toLocal().toString().substring(
+      0,
+      widget.endMoment.toLocal().toString().length - 4,
+    );
     List<String> dateAndTime = fullEndDateTime.split(' ');
     String date = dateAndTime[0];
     String time = dateAndTime[1];
@@ -77,17 +74,28 @@ class CompetitionFinishedWidgetState extends State<CompetitionFinishedWidget> {
           const Text(
             'Competition Finished',
             style: TextStyle(
-                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.pink),
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.pink,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           const Text(
             'On',
             style: TextStyle(
-                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.pink),
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.pink,
+            ),
           ),
           Text(
             switchDateTimeFormat(),
             style: const TextStyle(
-                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.pink),
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.pink,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ],
       ),
